@@ -1,0 +1,9 @@
+*~
+*.log
+*.bak
+*.out
+*.aux
+*.lst
+*.html
+
+local_scripts/*.sh
