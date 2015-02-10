@@ -24,7 +24,7 @@ besides:
 
 * each lesson source md-file must expose corresponding assignment id in 
   Moodle (we assume, that assignments are pre-created and we only update their
-  text) in its first line; cf. [lesson-1.md](https://bitbucket.org/Ulysses4ever/cs211-comp-arch/src/010360eb73394a6755bdb10aa5fa6a1cc8aa86d5/lessons/lesson-01.md?at=master).
+  text) in its first line; cf. [lesson-1.md](https://bitbucket.org/Ulysses4ever/cs221-comp-arch/src/010360eb73394a6755bdb10aa5fa6a1cc8aa86d5/lessons/lesson-01.md?at=master).
   
 The repo contains a bunch of handy scripts, which are documented directly in their source and/or in the [wiki](https://bitbucket.org/Ulysses4ever/it211-programming-languages/wiki). E. g. the most straightforward way to obtain code for non-assignment materials (`pages` directory) is to run `getHeadlessHtml.sh` and manually copy HTML code which is already in your clipboard after that to Moodle (also you need `xlip` installed on your system to use this).
 
