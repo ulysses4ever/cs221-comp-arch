@@ -19,5 +19,5 @@ srcFile=${srcFileFull%.*}
 
 htmlFileFull=$srcFile'.html'
 
-$selfPath/pandoc4headlessHtml.sh >> $htmlFileFull
+$selfPath/pandoc4headlessHtml.sh $srcFileFull > $htmlFileFull
 
