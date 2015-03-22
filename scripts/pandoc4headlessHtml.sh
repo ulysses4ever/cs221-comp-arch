@@ -17,7 +17,7 @@ selfPath=${selfFullName%/*}
 
 customWriter=$selfPath/'md2html.lua'
 
-pandoc -S -f markdown-auto_identifiers+example_lists+fancy_lists \
+pandoc -S -f markdown-auto_identifiers+example_lists+fancy_lists+intraword_underscores+superscript+subscript \
        -t $customWriter \
        --no-highlight $1
 
