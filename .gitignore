@@ -1,10 +1,13 @@
-*~
-*.log
-*.bak
-*.out
-*.aux
-*.lst
-*.html
+**/*~
+**/*.log
+**/*.bak
+**/*.out
+**/*.aux
+**/*.lst
+**/*.nav
+**/*.snm
+**/*.toc
+**/*.vrb
 
 local_scripts/*.sh
 
