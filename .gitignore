@@ -7,3 +7,5 @@
 *.html
 
 local_scripts/*.sh
+
+slides/*.pdf

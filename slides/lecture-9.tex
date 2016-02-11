@@ -1,0 +1,135 @@
+\newcommand{\h}{%
+handout,%
+}
+
+\input{preamble.tex}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
+\usepackage{framed}
+\usepackage{tabu}
+
+\newcommand{\p}{\textbf{\textcolor{green}{+}}}
+\newcommand{\m}{\textbf{\textcolor{red}{–}}}
+
+\title[Цифровая логика: схемы памяти]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 9. Цифровой логический уровень:\texorpdfstring{\\}{ }тактовые генераторы, схемы памяти}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Тактовые генераторы (clocks)}
+\begin{frame}
+\frametitle{Модификации тактовых генераторов}
+\screenshotw{10cm}{clocks.png}
+\end{frame}
+
+\section {Схемы памяти}
+
+\subsection{Малые последовательностные схемы}
+
+\begin{frame}
+\frametitle{SR-защёлка (latch)}
+\screenshotw{7cm}{SR-latch.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Два устойчивых состояния SR-защёлки (latch)}
+\screenshotw{12cm}{SR-latch-stable-states.png}
+
+\begin{minipage}{8cm}
+\begin{framed}
+\vspace{-.2cm}
+        \parbox{4cm}{Конечный автомат для\\
+            устойчивых состояний\\SR-защёлки}
+        \parbox{3cm}{\input{misc/sr-automata.tex}}
+\vspace{-.2cm}
+\end{framed}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Синхронная SR-защёлка}
+\screenshotw{12cm}{SR-synch.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Синхронная D-защёлка}
+\screenshotw{12cm}{D-synch-latch.png}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Синхронная JK-защёлка}
+%\screenshotw{11cm}{JK-latch.png}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Триггеры (flip-flops)}\vspace{-.7cm}
+\begin{columns}
+    \column{5cm} \pause\screenshotw{5cm}{edge-generator.png}
+    \column{7cm} \pause\screenshotw{7cm}{edge-generator-timing.png}
+\end{columns}
+\end{frame}
+
+\subsection{Средние последовательностные схемы}
+
+\begin{frame}
+\frametitle{Схема 4-битного регистра}
+\screenshotw{5.5cm}{register-curcuit.jpg}
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{4x3-схема памяти на D-триггерах}
+\screenshotw{7.1cm}{4x3-memory-chip.pdf}
+\end{frame}
+
+\subsection{VLSI-последовательностные схемы}
+
+\begin{frame}
+\frametitle{4 Mbit-схемы памяти}
+\screenshotw{11cm}{large-memory-chips-1.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{512 Mbit-схемы памяти}
+\screenshotw{11cm}{large-memory-chips-2.png}
+\end{frame}
+
+\subsection{Разнообразие технологий памяти}
+
+\begin{frame}
+\frametitle{Типы микросхем ОЗУ}
+\begin{itemize}[<+->]
+    \item Статическая и динамическая память (SRAM vs. DRAM).
+    \item Синхронная динамическая память (SDRAM).
+    \item Double Data Rate (DDR) SDRAM.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Сравнительная таблица: типы микросхем ОЗУ и ПЗУ}
+%\screenshotw{12cm}{memory-chips.png}
+\scriptsize
+\begin{table}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabu} to \textwidth {lllX[.4]X[.4]X}
+\toprule
+\textbf{№} & \multicolumn{1}{c}{\textbf{Тип}} & \multicolumn{1}{c}{\textbf{Операции}} & \centering\textbf{Побайтовая}\newline \textbf{запись} & \centering\textbf{Энерго-}\newline\textbf{НЕзависимость} & \multicolumn{1}{c}{\textbf{Области применения}}                                      \\
+\midrule
+1 & SRAM                             & R/W                                   & \p                                                                                        & \m                                                                                            & Регистры, кэш                                                                        \\
+2 & DRAM                             & R/W                                   & \p                                                                                        & \m                                                                                            & Оперативная память (раньше)                \\
+3 & SDRAM                            & R/W                                   & \p                                                                                        & \m                                                                                            & Оперативная память (сегодня)               \\
+4 & ROM                              & RO                                    & \m                                                                                        & \p                                                                                            & Крупные партии \newline микроконтроллеров и т. п.  \\
+5 & PROM                             & RO                                    & \m                                                                                        & \p                                                                                            & Мелкие партии \newline микроконтроллеров и т. п.   \\
+6 & EPROM                            & \textit{Больше} R                     & \m                                                                                        & \p                                                                                            & Прототипирование \newline микроконтроллеров и т. п. \\
+7 & EEPROM                           & Больше R                              & \p                                                                                        & \p                                                                                            & Прототипирование\newline микроконтроллеров и т. п. \\
+8 & Флеш                             & R/W                                   & \m                                                                                        & \p                                                                                            & Камеры, смартфоны…\\
+\bottomrule
+\end{tabu}
+\end{table}
+\end{frame}
+
+\end{document}

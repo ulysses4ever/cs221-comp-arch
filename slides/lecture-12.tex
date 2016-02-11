@@ -1,0 +1,228 @@
+\newcommand{\h}{%
+handout,%
+}
+
+\input{preamble.tex}
+
+%\AtBeginSection[]{}
+
+\title[Уровень микроархитектуры (2)]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 12. Уровень микроархитектуры:\texorpdfstring{\\}{ }
+дизайн и оптимизация}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Содержание}
+%\tableofcontents[hideallsubsections]
+%\end{frame}
+
+%\section{Разработка уровня микроархитектуры}
+
+\begin{frame}{Ускорение работы Mic-1}
+\begin{columns}
+    \column{6cm}
+\pause
+\begin{block}{Идеи ускорения}
+\begin{itemize}[<+->]
+    \item Сокращение числа циклов на\\
+        одну инструкцию,
+    \item сокращение длины цикла,
+    \item параллельное исполнение.
+\end{itemize}
+\end{block}
+%:
+
+\pause
+    \column{5.5cm}
+\begin{block}{Реализация ускорения}
+\begin{itemize}%[<+->]
+    \item Блок предварительной выборки инструкций (IFU),
+    \item 3-шинная архитектура,
+    \item конвейеризация.
+\end{itemize}
+\end{block}
+%:
+\end{columns}
+
+\pause
+\begin{block}{Другие возможности ускорения}
+\begin{itemize}[<+->]
+    \item Спекулятивное исполнение и прогнозирование ветвлений,
+    \item переименование регистров,
+    \item изменение последовательности инструкций,
+    \item кэш-память.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{Реализация некоторых идей ускорения: Mic-3}
+\vspace{-.2cm}
+\screenshotw{7.2cm}{mic-3.png}
+\end{frame}
+
+\section{Сокращение длины пути исполнения}
+
+\begin{frame}{Слияние заголовка цикла и микропрограммы}
+\small
+\pause
+\begin{block}{Стандартный путь исполнения микропрограммы}
+\pause
+\texttt{Main1: PC = PC + 1; fetch; goto (MBR)}\\
+\ldots\\
+\ldots\texttt{; goto Main1}
+\end{block}
+\pause
+\begin{columns}
+    \column{5.5cm}
+    \begin{block}{Реализация \texttt{POP} «в лоб»}
+    \pause
+    \begin{enumerate}
+        \item \texttt{MAR = SP = SP - 1; rd}
+        \item \texttt{}
+        \item \texttt{TOS = MDR; goto Main1}
+    \end{enumerate}
+    \end{block}
+
+    \pause
+    \column{6cm}
+    \begin{block}{Реализация \texttt{POP} через слияние}
+    \begin{enumerate}
+        \item \texttt{MAR = SP = SP - 1; rd}
+        \item \texttt{PC = PC + 1; fetch}
+        \item \texttt{TOS = MDR; goto (MBR)}
+    \end{enumerate}
+    \end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{3-шинная микроархитектура}
+\small\pause
+\begin{columns}
+    \column{5.5cm}
+    \begin{block}{Реализация \texttt{ILOAD} на Mic-1}
+    \pause
+    \begin{enumerate}%[<+->]
+        \item \texttt{H = LV}
+        \item \texttt{MAR = MBRU + H; rd}
+        \item \texttt{MAR = SP = SP + 1}
+        \item \texttt{PC = PC + 1; fetch; wr}
+        \item \texttt{TOS = MDR; goto Main1}
+    \end{enumerate}
+    \end{block}
+
+    \pause
+    \column{6cm}
+    \begin{block}{Реализация \texttt{ILOAD} на Mic-2}
+    \begin{enumerate}
+        \item \texttt{MAR = MBRU + LV; rd}
+        \item \texttt{MAR = SP = SP + 1}
+        \item \texttt{PC = PC + 1; fetch; wr}
+        \item \texttt{TOS = MDR; goto~Main1}
+    \end{enumerate}
+    \end{block}
+\end{columns}
+\end{frame}
+
+\section{Блок предварительной выборки инструкций (IFU)}
+
+\begin{frame}{Логическая схема блока IFU}
+\screenshotw{11cm}{IFU.pdf}
+\end{frame}
+
+\begin{frame}{Конечный автомат для регистра сдвига в IFU}
+\screenshotw{12cm}{IFU-FSM.pdf}
+\end{frame}
+
+\begin{frame}{Сравнение реализации \texttt{ILOAD}}
+\small
+\begin{columns}
+    \column{5.5cm}
+    \begin{block}{Старая реализация \texttt{ILOAD}}
+    \begin{enumerate}
+        \item \texttt{MAR = MBRU + LV; rd}
+        \item \texttt{MAR = SP = SP + 1}
+        \item \texttt{PC = PC + 1; fetch; wr}
+        \item \texttt{TOS = MDR; goto~Main1}
+    \end{enumerate}
+    \end{block}
+
+    \pause
+    \column{6cm}
+    \begin{block}{Новая реализация \texttt{ILOAD}}
+    \begin{enumerate}
+        \item \texttt{MAR = LV + MBR1U; rd}
+        \item \texttt{MAR = SP = SP + 1}
+        \item \texttt{TOS = MDR; wr; goto~(MBR1)}
+    \end{enumerate}
+    \end{block}
+\end{columns}
+
+\vspace{1cm}
+Вывод: путь сократился на 2 цикла.
+\end{frame}
+
+\begin{frame}{Сравнение реализации \texttt{IINC}}
+\begin{columns}
+    \column{5.5cm}
+    \begin{block}{Старая реализация \texttt{IINC}}
+    \pause
+    \begin{enumerate}
+        \item \texttt{H = LV}
+        \item \texttt{MAR = MBRU + H; rd}
+        \item \texttt{PC = PC + 1; fetch}
+        \item \texttt{H = MDR}
+        \item \texttt{PC = PC + 1; fetch}
+        \item \texttt{MDR = MBR + H; wr; goto Main1}
+    \end{enumerate}
+    \end{block}
+
+    \pause
+    \column{6cm}
+    \begin{block}{Новая реализация \texttt{IINC}}
+    \begin{enumerate}
+        \item \texttt{MAR = LV + MBR1U; rd}
+        \item \texttt{H = MBR1}
+        \item \texttt{MDR = MDR + H; wr; goto (MBR1)}
+    \end{enumerate}
+    \end{block}
+\end{columns}
+\end{frame}
+
+\section{Конвейер}
+
+\begin{frame}[plain]{Микроархитектура Mic-3}
+\screenshotw{7.2cm}{Mic-3.pdf}
+\end{frame}
+
+\begin{frame}[plain]{Принцип работы конвейера Mic-3}
+\screenshotw{8cm}{Mic-3-pipeline.pdf}
+\end{frame}
+
+\begin{frame}{Пример: инструкция \texttt{SWAP}}
+\pause
+\begin{columns}
+    \column{6cm}
+\begin{block}{Старая реализация (Mic-1)}
+\pause
+    \begin{enumerate}
+        \item \texttt{MAR = SP - 1; rd}
+        \item \texttt{MAR = SP}
+        \item \texttt{H = MDR; wr}
+        \item \texttt{MDR = TOS}
+        \item \texttt{MAR = SP - 1; wr}
+        \item \texttt{TOS = H; goto Main1}
+    \end{enumerate}
+\end{block}
+    \column{0cm}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Конвейерная реализация \texttt{SWAP}}
+\screenshotw{12cm}{Swap-pipelined.pdf}
+\end{frame}
+\end{document}

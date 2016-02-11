@@ -1,0 +1,218 @@
+\newcommand{\h}{handout,%
+}
+
+\input{preamble.tex}
+
+\title[Центральный процессор]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 4. Центральный процессор}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Содержание}
+\tableofcontents[hideallsubsections]
+\end{frame}
+
+\section {Центральный процессор}
+
+\subsection{Устройство и порядок работы}
+
+\begin{frame}
+\frametitle{Схема компьютера с общей шиной}
+\screenshotw{10cm}{one-cpu.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{АЛУ + регистры = тракт данных (Datapath)}
+\screenshotw{7cm}{data-path.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{УУ: выполнение инструкции}
+\begin{enumerate}[<+->]
+    \item Загрузка очередной инструкции из памяти в регистр IR\\
+    (адрес этой инструкции хранится в регистре PC).
+    \item ++PC
+    \item Определение типа инструкции (декодирование).
+    \item Определение местонахождения операндов.\\
+        При необходимости загрузка операндов из памяти.
+    \item Выполнение инструкции.
+    \item Запись результата.
+    \item goto 1.
+\end{enumerate}
+\end{frame}
+
+\subsection{Микропрограммное управление}
+
+\begin{frame}{Software vs. Hardware}
+\begin{itemize}\small
+\item Аппаратное обеспечение: платы, интегральные схемы, кабели…
+\item Программное обеспечение: алгоритмы, их запись на конкретных ЯП.
+\end{itemize}
+
+\pause\begin{block}{Основной Тезис}
+Аппаратное и программное обеспечение логически эквивалентны.
+\end{block}
+
+\pause{\small\begin{block}{Карен Панетта Ленц}
+“Hardware is just petrified software.”
+\end{block}}
+
+{\small\pause\begin{block}{Дискриминирующие факторы}
+\pause\begin{itemize}
+\addtolength{\itemsep}{-0.3\baselineskip}
+    \item Стоимость,
+    \item быстродействие,
+    \item надёжность,
+    \item частота изменений.
+\end{itemize}
+\end{block}}
+\end{frame}
+
+\begin{frame}{Изобретение микропрограммирования}
+\begin{itemize}
+    \item 1940-е: только ISA и ЦЛУ;
+    \pause\item 1951 г., Морис Уилкс (Maurice Wilkes), университет Кэмбриджа: идея трёхуровнего компьютера, интерпретация команд ISA;
+    \pause\item 1970-е: идея микропрограммирования укрепилась в мейнстриме.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{1960/70-е: гонка наборов инструкций}
+\begin{itemize}
+\item INC vs. ADD 1;
+\pause\item микропрограммные реализации:
+    \begin{itemize}
+    \item умножение/деление,
+    \item плавающая точка,
+    \item вызов подпрограмм,
+    \item циклы,
+    \item обработка символьных строк,
+    \item etc. (индексация, релокация, прерывания, переключение процессов, аудио/видео…).
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Преимущества интерпретации команд}
+\begin{itemize}
+    \item Исправление,
+    \item добавление,
+    \item проверка / документирование.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Компьютеры с интерпретаторами: CISC}
+\begin{itemize}
+    \item Компьютеры IBM,
+    \item все компьютеры 60-х/70-х, кроме самых дорогих (CDC),
+    \item персональные компьютеры,
+    \item роль ПЗУ.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{CISC vs. RISC}
+\begin{itemize}
+    \item RISC-архитектуры (Reduced Instruction Set Computer):
+    \begin{itemize}
+        \item RISC I / II в Беркли (Дэвид Паттерсон, Карло Секвин; 1980),\\Sun SPARC,
+        \item MIPS в Стенфорде (Джон Хеннеси; Sony PS, PS 2, PSP),
+        \item IBM Power Architecture (Cell в PS 3, маршрутизаторы Cisco),
+        \item ARM (Android-гаджеты, IPad, MS Surface, Canon PowerShot A470, …),
+        \item Atmel AVR (Arduino).
+    \end{itemize}
+    \pause\item CISC (монополисты): Мейнфреймы IBM, Intel, DEC VAX.
+    \pause\item Проблемы RISC, завоевание новых рынков.
+\end{itemize}
+\end{frame}
+
+%Современные процессоры и параллелизм.
+\section {Принципы проектирования современных процессоров}
+\begin{frame}
+\frametitle{Принципы проектирования современных процессоров / принципы RISC}
+\pause
+\begin{itemize}
+    \item Отражают состояние технологии.
+\end{itemize}
+
+\pause{\hrule\begin{itemize}[<+->]
+    \item Аппаратное исполнение,
+    \item высокая скорость запуска инструкций на выполнение (MIPS),
+    \item лёгкость декодирования инструкций,
+    \item обращение к памяти производится только\\
+        специальными инструкциями (“Load-Store Architectures”),
+    \item регистров должно быть много.
+\end{itemize}}
+\end{frame}
+
+\section {Организация параллельных вычислений}
+
+\subsection {Параллелизм на уровне команд}
+
+\begin{frame}
+\frametitle{Конвейер (pipeline)}
+\begin{columns}
+    \column{7cm}
+        \begin{itemize}
+            \item Начало: 1959, IBM, prefetch buffer.
+        \end{itemize}
+
+    \column{6cm}
+        \begin{itemize}
+            \item
+            \onslide<5->{\small\link{http://en.wikipedia.org/wiki/Classic_RISC_pipeline}{Wikipedia: Classic RISC pipeline}}
+        \end{itemize}
+\end{columns}
+
+\pause{\screenshotw{11cm}{pipeline-1.png}}
+\pause{\screenshotw{7cm}{pipeline-2.png}}
+\pause{\begin{itemize}
+    \item mips vs. latency
+\end{itemize}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Два конвейера}
+\screenshotw{11cm}{two-pipelines.png}
+\pause{\begin{itemize}[<+->]
+    \item Pentium: u- и v-конвейер.
+    \item Больше?
+\end{itemize}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Суперскалярная архитектура процессора}
+\screenshotw{9.5cm}{superscalar.png}
+\pause{\vspace{-.5cm}\small\begin{itemize}[<+->]
+    \item Начало: CDC 6600.
+    \item Вопрос: что позволило разместить все блоки C4 на одном процессоре?
+    \item SISD~— Single Instruction, Single Data в <<таксономии Флинна>> (Flynn).
+\end{itemize}}
+
+\end{frame}
+
+\subsection {Параллелизм на уровне процессоров}
+
+\begin{frame}{Матричные и векторные процессоры — SIMD}
+\screenshotw{9cm}{array-processor.png}
+
+\pause
+\begin{itemize}
+    \item Векторный процессор $\Longleftarrow$ векторные регистры.
+    \item \pause Современные примеры: \pause MMX/SSE, \pause Cell, \pause (GP)GPU: NVIDIA CUDA.
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}{Мультипроцессоры и мультикомпьютеры — MIMD}
+\screenshotw{6cm}{multiproc-1.png}
+\pause{\hrule\screenshotw{6cm}{multiproc-2.png}}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,15 @@
+\newcommand{\myscale}{0.7}
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,%
+                    semithick,scale=\myscale, every node/.style={scale=\myscale}]
+  %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+
+  \node[state] (q0)                    {$Q=0$};
+  \node[state] (q1) [right of=q0] {$Q=1$};
+  \path (q0.north east) edge [bend left]   node {$S$}  (q1.north west)
+         (q0)            edge [loop above]  node {$R$}   (q0)
+         (q1)            edge [loop above]  node {$S$}   (q1)
+         (q1.south west) edge [bend left]   node {$R$}  (q0.south east)
+%            edge [bend left]  node {1,0,R} (E)
+  ;
+\end{tikzpicture}

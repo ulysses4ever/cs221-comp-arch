@@ -1,0 +1,224 @@
+\newcommand{\h}{handout,}
+
+\input{preamble.tex}
+
+\title[Коды Хэмминга. Подсистема I/O (2)]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 7. Коды Хэмминга.\texorpdfstring{\\}{ }Подсистема ввода-вывода (окончание)}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Коды Хэмминга}[fragile]
+
+\begin{frame}{Коды Хэмминга, $d=3$}
+\begin{itemize}[<+->]
+
+    \item \textbf{Идея:} добавить ряд битов проверки чётности, по
+        корректности
+        которых после передачи установить позицию ошибки (if any).
+
+    \item
+            $(7, 4)$-код Хэмминга ($n = 7$, $k = 4$):
+
+            \screenshotw{3cm}{Hamming_7_4.pdf}
+
+    \item $(2^r - 1, 2^r - r - 1)$-код Хэмминга: \\
+    \begin{itemize}
+        \item позиции кодового слова нумеруются с 1;
+
+        \item инфо-биты вписываются подряд в позиции
+            кодового слова, пропуская позиции $2^{i-1}$, $0 < i \leqslant r$;
+
+        \item $i$-й бит проверки чётности ($0 < i \leqslant r$)
+            вписывается на $2^{i-1}$-ю
+            позицию кодового слова и контролирует чётность инфо-битов
+            в позициях, номер которых содержит $i$-ый бит равный 1.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Формулы для $(7,4)$-кода Хэмминга (часть 1)}
+
+\begin{block}{Структура кодового слова $c$}
+Пусть исходное сообщение обозначается $d=(d_1, d_2, d_3, d_4)$, а биты проверки чётности — $p_i$, тогда:
+\[
+    c = (p_1, p_2, d_1, p_3, d_2, d_3, d_4).
+\]
+\end{block}
+
+\begin{block}{Формулы для $p_i$ через $c_i$}
+\begin{enumerate}
+    \item $p_1 = c_3 + c_5 + c_7$,
+        потому что $3 = 1 \color{red} 1$, \ $5 = 1 0 \color{red} 1$,
+            $7 = 1 1 \color{red} 1$;
+    \item $p_2 = c_3 + c_6 + c_7 $,
+        потому что $3 = \textcolor{red}{1} 1$, \ $6 = 1\textcolor{red}{1}0$,
+            $7 = 1\textcolor{red}{1}1$;
+    \item $p_3 = c_5 + c_6 + c_7 $,
+        потому что $5 = \textcolor{red}{1} 01$, $6 = \textcolor{red}{1}10$,
+            $7 = \textcolor{red}{1}11$.
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}{Формулы для $(7,4)$-кода Хэмминга (часть 2)}
+
+\begin{block}{Формулы для $p_i$ через $d_i$}
+В приведённых формулах для $p_i$ можно заменить $c_i$ на биты исходного сообщения $d_i$, используя указанную выше структуру кодового слова $c$:
+\begin{enumerate}
+    \item $p_1 = d_1 + d_2 + d_4$,
+    \item $p_2 = d_1 + d_3 + d_4$,
+    \item $p_3 = d_2 + d_3 + d_4$.
+\end{enumerate}
+\end{block}
+
+\begin{block}{Итоговая формула для кодового слова}
+\[
+    c = (
+        \textcolor{green}{d_1 + d_2 + d_4},
+        \textcolor{blue}{d_1 + d_3 + d_4},
+        d_1,
+        \textcolor{magenta}{d_2 + d_3 + d_4},
+        d_2,
+        d_3,
+        d_4).
+\]
+
+\textbf{Замечание:} вектор $c$ получен из вектора $d$ как результат \emph{линейного преобразования}.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Проверочная матрица $(7,4)$-кода Хэмминга}
+\small
+\begin{block}{Крестики превращаются в единички}
+Составим таблицу: какие биты проверки чётности отвечают за какие биты кодового слова. На основе этой таблицы запишем \emph{проверочную матрицу} $\mathbf{H}$.
+
+%\begin{table}
+\begin{tabular}{cp{6cm}}
+%{\scriptsize
+    \begin{tabular}{r|cccccccc}
+    \toprule
+       & $p_1$ & $p_2$ & $d_1$ & $p_3$ & $d_2$ & $d_3$ & $d_4$ \\
+    \midrule
+    $p_1$ & x  &    & x  &    & x  &    & x \\
+    $p_2$ &    & x  & x  &    &    & x  & x \\
+    $p_3$ &    &    &    & x  & x  & x  & x \\
+    \bottomrule
+    \end{tabular}
+&
+    %\[
+    $
+        \mathbf{H} := \begin{pmatrix}
+            1 & 0 & 1 & 0 & 1 & 0 & 1\\
+            0 & 1 & 1 & 0 & 0 & 1 & 1\\
+            0 & 0 & 0 & 1 & 1 & 1 & 1
+        \end{pmatrix}
+    %\]
+    $
+\end{tabular}%}
+%\end{table}
+\end{block}
+
+\begin{block}{Основное свойство проверочной матрицы}
+Пусть $v$ — принятое по каналу слово,  которое отличается от кодового слова $c$ $(7,4)$-кода Хэмминга не более, чем в одной позиции, тогда вектор (он называется \emph{синдромом})
+\[
+    s = \mathbf{H}v
+\]
+даёт двоичную запись номера этой позиции. Если $s=0$, то $v=c$.
+\end{block}
+
+\end{frame}
+
+\section{Ввод-вывод и системные шины}
+
+\begin{frame}
+\frametitle{Логическая организация I/O}
+\screenshotw{10cm}{pc-logic-structure.png}
+
+\pause
+\small
+\begin{columns}
+    \column{6cm}
+\begin{itemize}[<+->]
+    \item «Программируемый I/O» или Port-Mapped I/O (пример: инструкции \texttt{IN}/\texttt{OUT} в x86);
+    \item Memory Mapped I/O (MMIO);
+    \item Direct Memory Access (DMA);
+\end{itemize}
+
+    \column{6.5cm}
+\begin{itemize}[<+->]
+    \item прерывания: программные\\(пример: \texttt{INT} в x86) и аппаратные; исключения;
+    \item арбитр шины и «кража циклов».
+\end{itemize}
+\end{columns}
+
+\begin{itemize}[<+->]
+    \item Роль контроллера;
+    \item «программируемый I/O» или Port-Mapped I/O (пример: инструкции \texttt{IN}/\texttt{OUT} в x86);
+    \item Memory Mapped I/O (MMIO);
+    \item Direct Memory Access (DMA);
+    \item прерывания: программные (пример: \texttt{INT} в x86) и аппаратные; исключения;
+    \item арбитр шины и «кража циклов».
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Эволюция шин на ПК}
+\begin{itemize}
+    \item ISA (Industry Standard Architecture) @ IBM PC, 1981;
+    \item EISA для 32-разрядных IBM-совместимых компьютеров, 1988;
+    \item PCI, 1992;
+    \item PCIe (Express), 2004.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Peripheral Component Interconnect (Conventional PCI)}
+\screenshotw{10cm}{pci-slots.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Устройство типичного ПК 1990-х}
+\screenshotw{12cm}{pci-isa.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Звёздная топология PCIe}
+\screenshotw{12cm}{PCIe-sample-arch.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Intel motherboard architecture}
+\begin{columns}
+    \column{6.3cm}
+        $\quad$ 4 Series  (до 2008 г.) %\\
+        \screenshotw{6cm}{Intel_4_Series_arch.png}
+%\begin{tabular}{p{6cm}@{}p{6.3cm}}
+    %\centering
+%        & %\centering
+    \pause
+    \column{6.3cm} %5+ Series  (после 2008 г.) \\
+            5+ Series  (после 2008 г.) %\\
+        %&
+
+        \screenshotw{6cm}{Intel_5_Series_arch.png}
+\end{columns}
+%\end{tabular}
+\end{frame}
+
+\end{document}
+
+\section{Организация некоторых перифирийных устройств}
+
+\begin{frame}
+\frametitle{Устройство жидкокристаллического монитора}
+\screenshotw{12cm}{lcd.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Устройство лазерного принтера}
+\screenshotw{9cm}{laser-printer.png}
+\end{frame}

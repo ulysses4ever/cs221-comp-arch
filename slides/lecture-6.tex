@@ -1,0 +1,174 @@
+\newcommand{\h}{}%handout,}
+
+\input{preamble.tex}
+
+\title[Вторичная память. Подсистема I/O (1)]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 6. Вторичная память.\texorpdfstring{\\}{ }Подсистема ввода-вывода}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Содержание}
+%\tableofcontents[hideallsubsections]
+%\end{frame}
+
+\begin{frame}
+\frametitle{Иерархия памяти}
+\vspace{-1cm}
+\begin{columns}
+    \column{7cm}
+        \screenshotw{9cm}{memory-hierarchy.png}
+        %\screenshotw{5cm}{motherboard.pdf}
+
+    \pause \column{4.5cm}
+        Рост
+        \begin{itemize}
+            \item стоимости за 1 бит \pause $\uparrow$,\pause
+            \item объёма \pause $\downarrow$,\pause
+            \item скорости доступа \pause $\uparrow$.
+        \end{itemize}
+\end{columns}
+
+\vspace{.5cm}
+\pause Энергозависимость.
+\end{frame}
+
+\section{Устройство магнитных дисков}
+
+\begin{frame}
+\frametitle{Винчестер: модель 1894 года с патронами .30-30}
+\screenshotw{12.3cm}{winchester.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Винчестер IBM 3340 @ System/370, 1973 г.}
+Проектировался для хранения двух блоков по 30 Мб.
+\screenshotw{10cm}{IBM_magnetic_disk_drives.png}
+\pause Первые HDD изобретены IBM в 1956 г.
+\end{frame}
+
+\begin{frame}
+\frametitle{Схема современного жёсткого диска}
+\screenshotw{10cm}{hard-drive.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Фрагмент дорожки жёсткого диска}
+\screenshotw{12cm}{hdd-track.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Параметры жёсткого диска}
+\begin{itemize}[<+->]
+    \item скорость позиционирования головки (seek): 5-10 мс;
+    \item 5'000–10'000 дорожек;
+    \item скорость вращения шпинделя: 5'400, 7'200, 10'800 об./мин.;
+    \item 1–12 магнитных пластин;
+    \item геометрия диска: цилиндр — головка — сектор (CHS).
+\end{itemize}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Разбиение жёсткого диска на зоны}
+%\screenshotw{7cm}{hdd-zones.png}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Контроллер жёсткого диска: функции}
+\begin{itemize}
+    \item Обеспечение простого интерфейса:
+    \begin{itemize}
+        \item поддержка команд READ, WRITE, FORMAT и т. д.
+        \item LBA (Logical Block Addressing, линейный адрес) $\to$ CHS;
+    \end{itemize}
+    \item преобразование последовательности битов в байты и наоборот;
+    \item кэширование;
+    \item учёт повреждённых секторов.
+\end{itemize}
+\end{frame}
+
+\section[Интерфейсы вторичной памяти и некоторых I/O-устройств]{Интерфейсы вторичной памяти и некоторых устройств ввода-вывода}
+
+\begin{frame}
+\frametitle{Жёсткие диски IDE (Integrated Drive Electronic)}
+aka ATA (AT Attachment, AT = Advanced Technology от IBM PC AT)
+\screenshotw{10cm}{ide-ribbon.pdf}
+\begin{itemize}[<+->]
+    \item середина 1980-х, IBM PC XT, BIOS-интерфейс;
+    \item CHS: 10-4-6 бит $\mapsto$ 504 Мб;
+    \item EIDE (Extended IDE / ATA-2):
+    \begin{itemize}
+        \item 28 бит для LBA, заменившего CHS  $\mapsto$ 128 Гб;
+        \item до 4-х дисков; CD-ROM / DVD;
+    \end{itemize}
+    \item ATAPI (Packet Interface, более «умная» шина);
+    \item 2003 г. Serial ATA (SATA).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SCSI (Small Computer System Interface), 1979/86 г.}
+\screenshotw{3.5cm}{scsi_logo.pdf}
+\begin{itemize}
+    \item “SCSI is an intelligent, peripheral, buffered, peer to peer interface”;
+    \item интерфейс «премиум-класса»\\(компьютеры Sun SPARC, Apple в 90-е);
+    \item топология ёлочной гирлянды;
+    \item параллельный интерфейс.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain]{Загружаем Windows 95 по SCSI}
+\vspace{-.3cm}
+\screenshotw{11cm}{boot-list-win95-scsi-c.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{RAID\\(redundant array of independent/inexpensive disks)}
+\begin{itemize}[<+->]
+    \item 1988 г., статья Д. Паттерсона и др.;
+    \item RAID vs. SLED (Single Large Expensive Disk);
+    \item параллелизм;
+    \item шесть оригинальных «уровней»: RAID 0, RAID 1, …
+    \item серверные решения, SCSI.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{RAID 0, 1, 10}
+\screenshotw{11cm}{raid.png}
+\end{frame}
+
+\section {Контроль ошибок памяти}
+
+\begin{frame}
+\frametitle{ECC — Error-Correcting/Controlling Codes (помехоустойчивые коды)}
+
+\only<1,2,4,6>{\screenshotw{4.5cm}{F_3_2-geometry.pdf}}
+\only<3>{\screenshotw{4.5cm}{Hamming_distance-example.pdf}}
+\only<5>{\screenshotw{4.5cm}{Parity-check-geometry.pdf}}
+\only<7>{\screenshotw{4.5cm}{Repetition-3-code-geometry.pdf}}
+
+\begin{itemize}%[<+->]
+    \onslide<1->\item Сообщения длины $k$ и кодовые слова длины $n$, $n > k$;
+
+    \onslide<2->\item метрика Хэмминга, минимальное кодовое расстояние $d$;
+
+    \onslide<4->\item простейший код, контролирующий ошибки:
+    \begin{itemize}
+        \item код проверки чётности;
+    \end{itemize}
+
+    \onslide<6->\item простейший код, исправляющий ошибки:
+    \begin{itemize}
+        \item код троекратного повторения.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\end{document}
+
+%%%%%%%%%%% END OF DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%

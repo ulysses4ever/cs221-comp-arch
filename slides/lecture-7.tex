@@ -1,0 +1,163 @@
+\newcommand{\h}{handout,
+}
+
+\input{preamble.tex}
+
+\title[Коды Хэмминга. Подсистема I/O (2)]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 7. Коды Хэмминга.\texorpdfstring{\\}{ }Подсистема ввода-вывода (окончание)}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Коды Хэмминга}[fragile]
+
+\begin{frame}{Коды Хэмминга, $d=3$}
+\begin{itemize}[<+->]
+
+    \item Идея: добавить ряд битов проверки чётности, по корректности
+        которых после передачи установить позицию ошибки (if any)
+
+    \item
+            $(7, 4)$-код Хэмминга ($n = 7$, $k = 4$):
+
+\only<1-6>{\screenshotw{3cm}{Hamming_7_4.pdf}}
+\only<7>{%
+            \vspace{.5cm}
+
+\begin{tabular}{cp{6cm}}
+{\scriptsize
+\begin{tabular}{rcccccccc}
+   & p1 & p2 & d1 & p4 & d2 & d3 & d4 \\
+p1 & x  &    & x  &    & x  &    & x \\
+p2 &    & x  & x  &    &    & x  & x \\
+p4 &    &    &    & x  & x  & x  & x \\
+\end{tabular}}
+&
+            %\[
+            $
+            \mathbf{H} := \begin{pmatrix}
+1 & 0 & 1 & 0 & 1 & 0 & 1\\
+0 & 1 & 1 & 0 & 0 & 1 & 1\\
+0 & 0 & 0 & 1 & 1 & 1 & 1
+            \end{pmatrix}
+            %\]%
+            $
+\end{tabular}
+
+            \vspace{.625cm}
+}
+
+    \item $(2^r - 1, 2^r - r - 1)$-код Хэмминга: \\
+    \begin{itemize}
+        \item позиции кодового слова нумеруются с 1;
+
+        \item инфо-биты вписываются подряд в позиции
+            кодового слова, пропуская позиции $2^i$, $0 \leqslant i < r$;
+
+        \item $i$-й бит проверки чётности вписывается на $2^i$-ю
+            позицию кодового слова и контролирует чётность инфо-битов
+            в позициях, номер которых содержит $i$-ый бит равный 1.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$(15,11)$-код Хэмминга}
+\screenshotw{11cm}{Hamming_15_11.png}
+
+\pause
+Проверочная матрица $(15,11)$-кода Хэмминга:
+\[
+\left( \begin{array}{ccccccccccccccc}
+1 & 0 & 1 & 0 & 1 & 0 &1 & 0 &1 & 0 &1 & 0 &1 & 0 &1 \\
+0 & 1 & 1 & 0 &0 & 1 & 1 & 0 &0 & 1 & 1 & 0 &0 & 1 & 1\\
+0 & 0 & 0 & 1 &1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 &1 & 1 & 1\\
+0 & 0 & 0 & 0 &0 & 0 & 0 & 1 &1 & 1 & 1 & 1 &1 & 1 & 1
+\end{array} \right)
+\]
+\end{frame}
+
+\section{Ввод-вывод и системные шины}
+
+\begin{frame}
+\frametitle{Логическая организация I/O}
+\screenshotw{10cm}{pc-logic-structure.png}
+
+\pause
+
+\begin{columns}
+    \column{6cm}
+\begin{itemize}[<+->]
+    \item «Программируемый I/O» или Port-Mapped I/O (пример: инструкции \texttt{IN}/\texttt{OUT} в x86);
+    \item Memory Mapped I/O (MMIO);
+    \item Direct Memory Access (DMA);
+\end{itemize}
+
+    \column{6.5cm}
+\begin{itemize}[<+->]
+    \item прерывания: программные (пример: \texttt{INT} в x86) и аппаратные; исключения;
+    \item арбитр шины и «кража циклов».
+\end{itemize}
+\end{columns}
+
+\begin{itemize}[<+->]
+    \item Роль контроллера;
+    \item «программируемый I/O» или Port-Mapped I/O (пример: инструкции \texttt{IN}/\texttt{OUT} в x86);
+    \item Memory Mapped I/O (MMIO);
+    \item Direct Memory Access (DMA);
+    \item прерывания: программные (пример: \texttt{INT} в x86) и аппаратные; исключения;
+    \item арбитр шины и «кража циклов».
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Эволюция шин на ПК}
+\begin{itemize}
+    \item ISA (Industry Standard Architecture) @ IBM PC, 1981;
+    \item EISA для 32-разрядных IBM-совместимых компьютеров, 1988;
+    \item PCI, 1992;
+    \item PCIe (Express), 2004.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Peripheral Component Interconnect (Conventional PCI)}
+\screenshotw{8cm}{pci-slots.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Устройство типичного ПК 1990-х}
+\screenshotw{10cm}{pci-isa.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Звёздная топология PCIe}
+\screenshotw{10cm}{PCIe-sample-arch.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Intel motherboard architecture}
+\begin{columns}
+    \column{6.3cm} 4 Series  (до 2008 г.) \\
+        \screenshotw{6cm}{Intel_4_Series_arch.png}
+        %\screenshotw{5cm}{motherboard.pdf}
+
+    \pause \column{6.3cm} 5+ Series  (после 2008 г.) \\
+        \screenshotw{6cm}{Intel_5_Series_arch.png}
+\end{columns}
+\end{frame}
+
+\section{Организация некоторых перифирийных устройств}
+
+\begin{frame}
+\frametitle{Устройство жидкокристаллического монитора}
+\screenshotw{12cm}{lcd.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Устройство лазерного принтера}
+\screenshotw{9cm}{laser-printer.png}
+\end{frame}
+
+\end{document}

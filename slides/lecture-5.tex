@@ -1,0 +1,203 @@
+\newcommand{\h}{handout,%
+}
+
+\input{preamble.tex}
+
+\title[Оперативная память]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 5. Оперативная память}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Содержание}
+\tableofcontents[hideallsubsections]
+\end{frame}
+
+\section {Организация оперативной памяти}
+
+\begin{frame}
+\frametitle{Биты}
+\pause{\begin{itemize}[<+->]
+    \item Почему двоичная система?
+    \item Двоично-десятичный код (binary-coded decimals, BCD).
+    \item Воображаемый пример: десяти-разрядные запоминающие устройства.
+    \item Квантовые биты: двумерное комплексное линейное пространство состояний вместо двух состояний.
+\end{itemize}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Понятие «ячейки памяти»}
+\vspace{-.2cm}\screenshotw{10cm}{bytes-example.png}
+\pause{\vspace{-.4cm}\begin{itemize}
+    \item Адресное пространство.
+\end{itemize}}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Примеры}
+%\screenshotw{8cm}{byte-variants.png}
+\centering
+\begin{tabular}{lp{2.1cm}}
+    \toprule
+    \textbf{Компьютер} & \textbf{Число битов в ячейке}\\
+    \midrule
+    Burroughs B1700  & 1 \\
+    IBM PC           & 8 \\
+    DEC PDP-8        & 12\\
+    IBM 1130         & 16\\
+    DEC PDP-15       & 18\\
+    XDS 940          & 24\\
+    Electrologica X8 & 27\\
+    XDS Sigma 9      & 32\\
+    Honeywell 6180   & 36\\
+    CDC 3600         & 48\\
+    CDC Cyber        & 60\\
+    \bottomrule
+\end{tabular}
+
+\pause{\begin{itemize}
+    \item Cell — location — byte — octet — char.
+\end{itemize}}
+\end{frame}
+
+\section {Порядок байт}
+
+\begin{frame}
+\frametitle{Порядок байт в слове (Endianness)}
+
+\begin{itemize}[<+->]
+    \item Память байт-ориентирована, процессор слово-ориентирован.
+    \item Как представлено число 1 в оперативной памяти\\
+           32-разрядной машины?
+\end{itemize}
+
+\pause
+%\screenshotw{11cm}{endianness.png}
+
+{\centering\footnotesize
+\begin{tabular}{ccccc}
+    \toprule
+    \textbf{Порядок}
+        & \textbf{\Wrapped{Первый байт\\(младший адрес)}}
+        & \textbf{\Wrapped{Средние\\байты}}
+        & \textbf{\Wrapped{Последний байт\\(старший адрес)}}
+        & \textbf{\Wrapped{Число 1000 (0x3E8)\\в двух байтах}}
+        \\
+    \midrule
+    \Wrapped{Прямой\\ \scriptsize(big-endian)}
+        & старший
+        & …
+        & младший
+        & 03 E8
+        \\
+    \Wrapped{Обратный\\ \scriptsize(little-endian)}
+        & младший
+        & …
+        & старший
+        & E8 03
+        \\
+    \bottomrule
+\end{tabular}}
+
+\pause\small
+\begin{block}{История}
+\begin{itemize}
+    \item Danny Cohen (1980-04-01): “On Holy Wars and a Plea for Peace”
+    \item NUXI problem
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Пример: 0A0B0C0D$_{\text{h}}$}
+\begin{columns}
+    \column{10.5cm}
+\begin{itemize}\itemsep=10pt
+    \item 8-битный байт, прямой (big) порядок:\hfill |0A|0B|0C|0D|;
+    \item 8-битный байт, обратный (little) порядок:\hfill |0D|0C|0B|0A|;
+    \item 16-битный байт, прямой (big) порядок:\hfill |0A0B|0C0D|;
+    \item 16-битный байт, обратный (little) порядок:\hfill |0C0D|0A0B|.
+\end{itemize}
+    \column{0cm}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Примеры реализации}
+\begin{itemize}[<+->]
+    \item Прямой порядок (aka \emph{big-endian order} aka \emph{network order}):\\
+    IBM System 360/370/.../z, Motorolla 68000, Atmel AVR32;
+
+    \item обратный порядок (aka \emph{little-endian order}):\\
+    x86(-64), Atmel AVR, DEC VAX;
+
+    \item переключаемый порядок (bi-endian): ARMv3+, SPARC V9+, MIPS;
+
+    \item middle-endian: PDP-11.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Какой порядок выбрать?}
+\pause
+\begin{itemize}\itemsep=10pt
+    \item Прямой порядок привычней для человека;
+    \item обратный порядок упрощает адресацию;
+    \item обратный порядок упрощает реализацию арифметики\\
+         в простых машинах.
+\end{itemize}
+\end{frame}
+
+\section {Сверхоперативная память: кэш-память}
+
+\begin{frame}{Устройство и основные идеи}
+\screenshotw{7cm}{cache-memory.png}
+\pause{\begin{itemize}[<+->]
+    \item \link%
+    {http://en.wikipedia.org/wiki/Von_Neumann_architecture\#Von_Neumann_bottleneck}%
+    {Wikipedia: Von Neumann bottleneck};
+    \item принцип локальности;
+    \item кэш-линейки (cache lines);
+    \item формула: если $c$~— среднее время доступа к кэш-памяти,
+           \\$m$~— к основной памяти, а $h$~— доля кэш-промахов, то:
+
+    \begin{center}
+    среднее время доступа к данным = \onslide<6->{$c + h \cdot m$}
+    \end{center}
+
+    \item<7-> split cache.
+\end{itemize}}
+\end{frame}
+
+\begin{frame}{Вопросы проектирования кэш-памяти}
+\begin{enumerate}
+    \item Размер кэш-памяти.
+    \item Размер кэш-линеек.
+    \item Использование сплит-кэша.
+    \item Организация: алгоритм сброса и адресация.
+    \item Уровни кэш-памяти.
+\end{enumerate}
+\end{frame}
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  КОНЕЦ  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Пути преодоления Von Neumann bottleneck}
+\begin{columns}
+    \column{7cm}
+\screenshotw{7cm}{pipeline-4.pdf}
+    \column{6cm}
+\begin{enumerate}
+    \item Кэш-память.
+    \item Сплит-кэш.
+    \item Прогнозирование ветвлений\\
+        (\link{http://en.wikipedia.org/wiki/Branch_predictor}%
+        {branch prediction}).
+    \item Память-черновик\\(scratchpad memory).
+
+\end{enumerate}
+\end{columns}
+\end{frame}

@@ -1,0 +1,29 @@
+\subsection{PCI}
+\begin{frame}
+\frametitle{Основные характеристики Conventional PCI}
+\begin{itemize}
+    \item напряжение: 5В / 3В
+    \item синхронная шина: частота работы = 66 MHz (33 MHz)
+    \item ширина в части данных: 32 бита (64 бита)
+    \item ширина в части адресов: 32 бита (64 бита)
+    \item адреса и данные мультиплексируются
+    \item 120 контактов (+ 64)
+    \item задающее устройство: initiator, подчинённое: target
+    \item конфигурационное пространство устройств 256 байт
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Арбитраж PCI}
+\screenshotw{12cm}{pci-arbiter.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Основные сигналы на шине PCI}
+\screenshotw{11cm}{pci-signals.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Пример цикла чтения/записи на шине PCI}
+\screenshotw{11cm}{pci-transaction.png}
+\end{frame}

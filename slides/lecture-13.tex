@@ -1,0 +1,279 @@
+\newcommand{\h}{%
+handout,%
+}
+
+\input{preamble.tex}
+
+\title[Уровень набора инструкций]%
+    {Архитектура компьютеров\texorpdfstring{\\}{ }%
+    Лекция 13. Уровень набора инструкций (ISA)}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Современные многоуровневые машины}
+\screenshotw{6cm}{multi-level-computer.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Место уровня ISA}
+\screenshotw{11cm}{isa-place.png}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Содержание}
+%\tableofcontents[hideallsubsections]
+%\end{frame}
+
+\begin{frame}{Введение}
+\begin{block}{Определение из Википедии}
+An \textbf{instruction set}, or \textbf{instruction set architecture (ISA)}, is the part of the computer architecture \alert{related to programming}, including the
+\begin{columns}
+    \column{6cm}
+\begin{itemize}
+    \item native data types,
+    \item instructions,
+    \item registers,
+    \item addressing modes,
+\end{itemize}
+    \column{6cm}
+\begin{itemize}
+    \item memory architecture,
+    \item interrupt and exception handling,
+    \item external I/O.
+\end{itemize}
+\end{columns}
+\end{block}
+
+\pause
+Знакомые наборы инструкций: x86-16, IJVM.
+
+\pause
+\begin{block}{Основной тезис}
+Первые электронные компьютеры имели простые наборы инструкций~— так же, как и современные (\alert{RISC}).
+\end{block}
+\end{frame}
+
+\begin{frame}{Набор инструкций MIPS: общая характеристика}
+\begin{itemize}[<+->]
+    \item Разработан в Стэнфорде в начале 80-х;
+    \item автор: Джон Хеннесси и др., см. книгу Паттерсона \& Хеннесси;
+    \item коммерциализация: MIPS Technologies;
+    \item рынок: встраиваемые устройства (игровые консоли),
+    в середине-конце 90-х каждый третий проданный RISC-процессор это MIPS-процессор;
+    \item \link{http://stackoverflow.com/q/2635086/465100}{MIPS processors: Are they still in use?} / StackOverflow.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Инструкции и операнды}
+
+\begin{columns}
+    \column{6.3cm}
+\pause
+\begin{block}{Группы инструкций}
+\begin{itemize}
+    \item Арифметические,
+    \item логические,
+    \item перемещение данных,
+    \item условные и безусловные переходы.
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{«Адресность» инструкций}
+Пример: \texttt{a = b + c} переводится в
+\begin{verbatim}
+    add a, b, c
+\end{verbatim}
+\end{block}
+
+
+\pause
+    \column{5.7cm}
+Операнды (часть 1)
+\screenshotw{5.7cm}{MIPS-operands.png}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Арифметический пример побольше}
+\begin{columns}
+    \column{5.5cm}
+\begin{block}{Код на C}
+\begin{verbatim}
+f = (g + h) - (i + j);\end{verbatim}
+\end{block}
+
+    \column{5.5cm}
+\pause
+\begin{block}{Код на ассемблере MIPS}
+Предполагаем, что \texttt{f}, …, \texttt{j} находятся в \texttt{\$s0}, …, \texttt{\$s4}.
+\begin{verbatim}
+    add $t0, $s1, $s2
+    add $t1, $s3, $s4
+    sub $s0, $t0, $t1
+\end{verbatim}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Модель памяти}
+\begin{columns}
+    \column{6.5cm}
+\pause
+\begin{itemize}[<+->]
+    \item В памяти размещаются составные типы данных.
+    \item Load-Store Architecture.
+    \item Память адресуется в байтах.
+    \item Требование по выравниванию (адрес слова кратен 4).
+    \item MIPS использует \emph{прямой порядок} байт.
+\end{itemize}
+\pause
+    \column{5cm}
+\screenshotw{5cm}{MIPS-mem-model.pdf}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]{Операнды (часть 2)}
+\begin{columns}
+    \column{5.5cm}
+Операнды в памяти
+\begin{block}{Код на C}
+\begin{verbatim}
+    A[12] = h + A[8];\end{verbatim}
+\end{block}
+
+    \column{5.5cm}
+\onslide<3>{%
+\begin{block}{Непосредственные операнды}
+%\begin{verbatim}
+   \texttt{addi \$s2, \$s1, -1}
+%\end{verbatim}
+\end{block}
+}
+\end{columns}
+
+\pause
+\begin{columns}
+    \column{9cm}
+\begin{block}{Код на ассемблере MIPS}
+Предполагаем, что \texttt{h} находится в \texttt{\$s2}, и\\
+адрес начала массива \texttt{A} — в \texttt{\$s3}.
+\begin{verbatim}
+    lw  $t0, 32($s3)    # load word
+    add $t0, $s2, $t0
+    sw  $t0, 48($s3)    # store word\end{verbatim}
+\end{block}
+    \column{2cm}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Код инструкций («машинный код»)}
+\screenshotw{12cm}{MIPS-ins-format.png}
+%\begin{columns}
+
+%    \column{6.3cm}
+
+%    \column{5cm}
+%\end{columns}
+
+\pause
+\begin{block}{Коды («номера») регистров}
+\begin{columns}\small
+    \column{4cm}
+\begin{itemize}
+    \item \texttt{\$t0–\$t7} $\mapsto$  8–15;
+\end{itemize}
+    \column{4cm}
+\begin{itemize}
+    \item \texttt{\$s0–\$s7} $\mapsto$ 16–23;
+\end{itemize}
+    \column{4cm}
+\begin{itemize}
+    \item \texttt{\$t8–\$t9} $\mapsto$ 24–25.
+\end{itemize}
+\end{columns}
+\end{block}
+
+
+\pause
+\begin{columns}
+    \column{9.5cm}
+\begin{block}{Пример: \texttt{add \$t0, \$s1, \$s2}}
+\small
+\ttfamily
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+special & \$s1 & \$s2 & \$t0 & 0 & add\\
+\hline
+0 & 17 & 18 & 8 & 0 & 32\\
+\hline
+000000 & 10001 & 10010 & 01000 & 00000 & 100000\\
+\hline
+\end{tabular}
+\end{block}
+    \column{1cm}
+\end{columns}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Переходы}
+
+
+\begin{columns}
+
+    \column{5.5cm}
+\pause
+\begin{block}{\small Условные}
+\begin{itemize}\ttfamily\small
+    \item beq rs, rt, L1
+    \item bne rs, rt, L1
+\end{itemize}
+\end{block}
+
+\pause\vspace{-.1cm}
+\begin{block}{\small Сравнения}
+\begin{itemize}\ttfamily\small
+    \item slt rd, rs, rt
+    \item slti rt, rs, constant
+\end{itemize}
+\end{block}
+
+\pause\vspace{-.1cm}
+\begin{block}{\small Безусловные}
+\begin{itemize}\ttfamily\small
+    \item j L1
+    \item jal ProcedureAddress
+    \item jr \$ra
+\end{itemize}
+\end{block}
+
+    \column{5.5cm}
+\pause
+\begin{block}{Код на C}
+\begin{verbatim}if (i==j) f = g+h;
+else f = g-h;\end{verbatim}
+\end{block}
+
+\pause
+\begin{block}{Код на ассемблере MIPS}
+\begin{verbatim}
+      bne $s3, $s4, Else
+      add $s0, $s1, $s2
+      j   Exit
+Else: sub $s0, $s1, $s2
+Exit: …\end{verbatim}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}[plain]{Режимы адресации MIPS: резюме}
+\screenshotw{6.7cm}{MIPS-addressing-modes.png}
+\end{frame}
+
+\end{document}

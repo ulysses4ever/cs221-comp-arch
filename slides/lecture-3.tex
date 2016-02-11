@@ -1,0 +1,169 @@
+\newcommand{\h}{handout,%
+}
+
+\input{preamble.tex}
+
+\title[Архитектура компьютеров. Лекция 3]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 3. Разнообразие компьютеров}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}[plain]{Закон Мура (Гордон Мур, Дэвид Хаус, 1965)}
+\vspace{-.2cm}\screenshotw{11.2cm}{moores_law2.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Содержание}
+\tableofcontents
+\end{frame}
+
+\section {«Одноразовые компьютеры»}
+
+\begin{frame}{RFID (Radio-frequency identification) метки}
+\begin{columns}
+    \column{3cm} \screenshotw{3cm}{rfid_rice.jpg}
+    \column{5cm} \screenshotw{5cm}{RFID_Tags.jpg}
+\end{columns}
+\pause
+\begin{itemize}
+    \item RFID vs. штрих-коды
+\end{itemize}
+\end{frame}
+
+\begin{frame}{RFID (II)}
+\begin{columns}
+    \column{6cm} \screenshotw{6cm}{rfid_transponder.jpg}
+    \column{5cm} \pause\screenshotw{5cm}{rfid-sheep.jpg}
+\end{columns}
+\end{frame}
+
+\begin{frame}{RFID (III)}
+\screenshotw{5cm}{biom-passport.jpg}
+\end{frame}
+
+\begin{frame}{Биометрические паспорта}
+\screenshotw{6cm}{rfid_passport.jpg}
+\end{frame}
+
+\section {Микроконтроллеры (встраиваемые компьютеры)}
+
+\begin{frame}
+\frametitle{Характерные черты (отличия от настольных ПК)}
+\begin{itemize}[<+->]
+    \item Гарвардская архитектура (ROM для программы, RAM для данных),
+    \item интеграция ЦП / памяти / IO,
+    \item ценовые ограничения,
+    \item физические ограничения,
+    \item системы реального времени.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Arduino (single-board microcontroller) @ Atmel AVR}
+\screenshotw{2cm}{arduino-logo.png}
+\screenshotw{6cm}{Arduino.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Arduino IDE (Wiring, C++)}
+\screenshotw{6cm}{Arduino-IDE.png}
+\end{frame}
+
+\section {Игровые приставки}
+
+\begin{frame}
+\frametitle{Примеры и характерные черты}
+%\screenshotw{12cm}{game-consoles-1.png}
+\begin{columns}
+    \column{6cm}
+        \screenshotw{6cm}{PS4_s.png}
+
+    \column{6cm}
+        \screenshotw{6cm}{Xbox_One_s.png}
+\end{columns}
+\pause
+\link%
+    {http://en.wikipedia.org/wiki/History_of_video_game_consoles_(eighth_generation)}%
+    {Wikipedia: History of video game consoles (eighth generation)}
+
+\pause\begin{itemize}[<+->]
+    \item Переход с RISC-процессоров (Power PC) на CISC-процессоры AMD,
+    \item высокая степень параллелизма,
+    \item продвинутое I/O,
+    \item не расширяемы,
+    \item + портативные системы, смартфоны, планшеты, Smart TV~— RISC-процессоры (ARM).
+\end{itemize}
+
+\end{frame}
+
+\section {Персональные компьютеры}
+
+\begin{frame}
+\frametitle{Больше, чем desktop}
+\begin{itemize}
+    \item Ноутбуки,
+    \item нетбуки,
+    \item «ультрабуки».
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Семейство процессоров Intel x86}
+\screenshotw{11cm}{intel-family.png}
+\end{frame}
+
+\section {Серверы}
+
+\begin{frame}
+\frametitle{Сервер Мехмата}
+\screenshotw{5.2cm}{mmcs-server.jpg}
+\end{frame}
+
+\section {Высокопроизводительные вычисления (HPC)}
+
+\begin{frame}
+\frametitle{Виды высокопроизводительных систем}
+\begin{itemize}
+    \item Компьютерные кластеры
+    \item Мейнфреймы
+    \item Суперкомпьютеры
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Типичный кластер под управлением Linux}
+\screenshotw{9.5cm}{cluster.jpg}
+\pause Серверная ферма, Datacenter (ЦОД), Грид-системы
+\end{frame}
+
+\begin{frame}
+\frametitle{Мейнфрейм IBM System Z10}
+\screenshotw{3.4cm}{Systemz10.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Суперкомпьютер Cray-2}
+\screenshotw{10cm}{Cray2.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Суперкомпьютер IBM Blue Gene}
+\screenshotw{11cm}{blue-gene.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Суперкомпьютер Ломоносов (МГУ, T-Платформы)}
+\screenshotw{11cm}{Lomonosov.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Рейтинг cуперкомпьютеров Top500 (\#44, Ноябрь 2014)}
+\small LINPACK
+\screenshotw{12cm}{TOP500-44.png}
+\end{frame}
+
+\end{document}
+

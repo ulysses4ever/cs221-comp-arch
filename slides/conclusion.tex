@@ -1,0 +1,243 @@
+\newcommand{\h}{%
+handout,%
+}
+
+\input{preamble}
+
+\usepackage{multicol}
+
+\title[Архитектура компьютеров. Заключение]{Архитектура компьютеров. Заключение}
+
+
+\newcommand{\LRA}{$\leftrightarrow$}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+  \small
+   \begin{multicols}{2}
+     \tableofcontents[currentsection,hideothersubsections]
+   \end{multicols}
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% НАЧАЛО ДОКУМЕНТА %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Содержание курса}
+\small
+\begin{multicols}{2}
+  \tableofcontents
+\end{multicols}
+%\small\tableofcontents%[hideallsubsections]
+\end{frame}
+
+%\screenshotw{3.2cm}{transistor-NOT.png}
+
+\section{Лекция 1. Введение}
+\begin{frame}{Организация и архитектура}
+\begin{columns}
+	\column{6cm}
+	\screenshotw{6cm}{a-computer.pdf}
+
+	\column{6cm}
+\screenshotw{6cm}{multi-level-computer.pdf}
+\end{columns}
+\end{frame}
+
+\section{Лекция 2. Развитие вычислительной техники}
+
+
+\begin{frame}{Поколения компьютерной техники}
+\begin{itemize}
+    \item Нулевое поколение — механические компьютеры (1642–1945)
+    \item Первое поколение — электронные лампы (1945–1955)
+    \item Второе поколение — транзисторы (1955–1965)
+    \item Третье поколение — интегральные схемы (1965–1980)
+    \item Четвёртое поколение — СБИС (VLSI), микропроцессоры, персональные компьютеры (1980–?)
+    \item Пятое поколение — невидимые компьютеры
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Первое поколение}
+\screenshotw{12cm}{history-1.png}
+\end{frame}
+
+\begin{frame}{Транзисторы (1947 г.): Нобелевская премия 1956 г.}
+\screenshotw{8.5cm}{Bardeen_Shockley_Brattain_1948.JPG}
+\vspace{-.3cm}\small Джон Бардин, Уильям Шокли и Уолтер Браттейн в лаборатории Bell, 1948 г.
+\end{frame}
+
+\section[{Лекция 3. Разнообразие компьютеров}]{Лекция 3. Разнообразие компьютеров}
+
+\begin{frame}[plain]{Закон Мура (Гордон Мур, Дэвид Хаус, 1965)}
+\vspace{-.2cm}\screenshotw{11cm}{moores_law2.pdf}
+\end{frame}
+
+\begin{frame}{Категории вычислительных устройств}
+\begin{itemize}
+    \item «Одноразовые компьютеры»,
+    \item микроконтроллеры (встраиваемые компьютеры),
+    \item игровые приставки,
+    \item персональные компьютеры,
+    \item серверы,
+    \item высокопроизводительные вычисления (HPC).
+\end{itemize}
+\end{frame}
+
+%Современные процессоры и параллелизм. Оперативная память.
+\section{Лекция 4. Центральный процессор}
+\begin{frame}{Схема работы CPU}
+\color{red}{Красным} \color{black}{— поток управления, чёрным — поток данных.}
+\screenshotw{10cm}{cpu.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Конвейеры и суперскаляры, таксономия Флинна}
+\begin{columns}
+    \column{5cm}
+\vspace{-1.8cm}
+\screenshotw{7cm}{pipeline-1.png}
+\vspace{-.5cm}
+\screenshotw{5cm}{pipeline-2.png}
+    \column{6cm}
+\vspace{.2cm}
+\screenshotw{6.5cm}{superscalar.png}
+\end{columns}
+\begin{itemize}
+    \item SISD,
+    \item SIMD,
+    \item MISD,
+    \item MIMD.
+\end{itemize}
+\end{frame}
+
+\section{Лекция 5. Оперативная память}
+\begin{frame}{Логическая структура: порядок байт}
+\screenshotw{11cm}{big-little.png}
+\end{frame}
+
+\section[Вторичная память]{Лекции 6, 7.  Вторичная память}
+
+\begin{frame}
+\frametitle{Иерархия памяти}
+\screenshotw{10cm}{memory-hierarchy.png}
+\end{frame}
+
+\begin{frame}{Помехоустойчивое кодирование}
+\begin{columns}
+    \column{7cm}
+\begin{block}{$(7, 4)$-код Хэмминга}
+        \screenshotw{6cm}{Hamming_7_4.pdf}
+\end{block}
+    \column{0cm}
+\end{columns}
+\end{frame}
+
+\section[Подсистема ввода-вывода]{Лекции 6, 7.  Подсистема ввода-вывода}
+\begin{frame}{Прерывания, их источники}
+        \screenshotw{6.8cm}{interrupt-process.png}
+\end{frame}
+
+\section[Вентили и основные логические схемы]{Лекции 8–10.  Уровень цифровой логики: вентили, схемы, шины}
+\begin{frame}
+\frametitle{Типы логических схем и соединений}
+\begin{itemize}
+    \item Комбинационные,
+    \item последовательностные (sequential, схемы памяти),
+    \item шины,
+    \begin{itemize}
+        \item внешние и внутренние,
+        \item параллельные и последовательные.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{Организация типичного ПК 2010-х}
+\screenshotw{10.5cm}{h87.png}
+\end{frame}
+
+
+\section{Лекция 11–12.  Уровень микроархитектуры}
+\begin{frame}
+\frametitle{Пример микроархитектуры: Mic-1}
+\vspace{-.3cm}
+\screenshotw{8cm}{Mic-1.png}
+\end{frame}
+
+\begin{frame}[plain]{Микроархитектура Intel Core 2 (2006)}
+\screenshotw{7cm}{Intel_Core2_muarch.pdf}
+\end{frame}
+
+\section[Уровень набора инструкций]{Лекция 13. Уровень набора инструкций на примере MIPS}
+\begin{frame}
+\begin{block}{Определение из Википедии}
+An \textbf{instruction set}, or \textbf{instruction set architecture (ISA)}, is the part of the computer architecture \alert{related to programming}, including the
+\begin{columns}
+    \column{6cm}
+\begin{itemize}
+    \item native data types,
+    \item instructions,
+    \item registers,
+    \item addressing modes,
+\end{itemize}
+    \column{6cm}
+\begin{itemize}
+    \item memory architecture,
+    \item interrupt and exception handling,
+    \item external I/O.
+\end{itemize}
+\end{columns}
+\end{block}
+
+\pause CISC (x86, IBM z Series) против RISC (MIPS, ARM, …).
+\end{frame}
+
+\section{Лекция 14. Числовые типы данных}
+\begin{frame}
+\frametitle{Типы чисел в IEEE 754}
+\screenshotw{12cm}{ieee-754-number-types.png}
+\end{frame}
+
+\section{Заключение}
+
+\begin{frame}
+\frametitle{Чему нужно учить в курсе архитектуры компьютера}
+\pause
+\begin{columns}
+    \column{0cm}
+    \column{10cm}
+\begin{block}{Чему нужно учить специалистов по информатике}
+    \textcolor{blue}{\href{https://www.acm.org/education/CS2013-final-report.pdf}{Computer Science Curricula 2013}}
+    \small by
+    \begin{itemize}
+        \item Association for Computing Machinery (ACM),
+        \item IEEE Computer Society.
+    \end{itemize}
+\end{block}
+\end{columns}
+
+\pause
+\begin{block}{Фрагмент CSC2013: Architecture and Organization, цитата}
+A professional in any field of computing should \textbf{not} regard the computer as just a \emph{black
+box} that executes programs by \emph{magic}.
+\end{block}
+\end{frame}
+
+\begin{frame}{CSC 2008: AR/Directions in Computing [elective]}
+\begin{itemize}
+    \item Semiconductor technology and Moore’s law,
+    \item limitations to semiconductor technology,
+    \item quantum computing,
+    \item optical computing,
+    \item molecular (biological) computing,
+    \item new memory technologies.
+\end{itemize}
+\end{frame}
+
+\end{document}

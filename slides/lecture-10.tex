@@ -1,0 +1,285 @@
+\newcommand{\h}{%
+handout,%
+}
+
+\input{preamble.tex}
+
+\title[Компьютерные шины]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 10. Цифровой логический уровень:\texorpdfstring{\\}{ }компьютерные шины}
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Содержание}
+\tableofcontents
+\end{frame}
+
+%\screenshotw{3.2cm}{transistor-NOT.png}
+
+\section{Вопросы организации шин}
+
+\begin{frame}
+\frametitle{«Системная шина»}
+\screenshotw{9cm}{system-bus-ru.png}
+
+\pause Внутренние и внешние шины
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{Разнообразие шин}
+\screenshotw{11cm}{h87.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Цоколёвка (pinout) процессора}
+\screenshotw{11cm}{cpu-pinout.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Способы подсоединения к шине}
+\begin{block}{Задающие (master) и подчинённые (slave)}
+\footnotesize
+%\screenshotw{9cm}{master-slave.png}
+\begin{table}[h]
+\begin{tabular}{@{}lll@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{Задающее устройство}} & \multicolumn{1}{c}{\textbf{Подчинённое устройство}} & \multicolumn{1}{c}{\textbf{Пример запроса}} \\ \midrule
+Центральный процессор                            & Память                                              & Чтение очередной команды         \\
+Центральный процессор                            & Устройство ввода-вывода                             & Запрос на передачу данных                   \\
+Центральный процессор                            & Сопроцессор                                         & Передача команды                            \\
+Устройство ввода-вывода                          & Память                                              & Прямой доступ в память                \\
+Сопроцессор                                      & Центральный процессор                               & Доступ к операндам из ЦП                    \\ \bottomrule
+\end{tabular}
+\end{table}
+
+%\vspace{-.3cm}
+\end{block}
+
+\pause
+\begin{block}{Технические аспекты}
+\begin{itemize}[<+->]
+    \item Драйвер, приёмник и трансивер шины.
+    \item tri-state устройства vs. открытый коллектор («монтажное ИЛИ», wired OR).
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Основные характеристики шины}
+\pause
+\begin{block}{Ширина}\pause
+\begin{itemize}[<+->]
+    \item Parallel vs. serial,
+    \item перекос шины,
+    \item временн\'{о}е мультиплексирование.
+\end{itemize}
+\end{block}
+
+\begin{columns}
+    \column{5cm}
+    \pause
+
+    \begin{block}{Синхронизация}
+    \begin{itemize}
+        \item Синхронные,
+        \item асинхронные,
+        \item изохронные шины.
+    \end{itemize}
+    \end{block}
+
+    \column{5cm}
+    \pause
+
+    \begin{block}{Арбитраж}
+    \begin{itemize}
+        \item Централизованный,
+        \item децентрализованный.
+    \end{itemize}
+    \end{block}
+
+\end{columns}
+\end{frame}
+
+\begin{block}{Проблемы эволюции шин}
+\screenshotw{10cm}{addresses-evolution-x86.png}
+\end{block}
+
+\subsection{Синхронизация шины}
+
+\begin{frame}
+\frametitle{Чтение на синхронной шине}
+\screenshotw{11cm}{sync-bus-transfer.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Чтение на асинхронной шине}
+\screenshotw{8.5cm}{async-bus-transfer.png}
+
+\pause
+\small\begin{block}{Полное квитирование (full handshaking)}
+\vspace{-.2cm}
+\begin{enumerate}
+  \setlength{\itemsep}{3pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+    \item Установка MSYN.
+    \item Установка SSYN.
+    \item Сброс MSYN в ответ на установку SSYN.
+    \item Сброс SSYN в ответ на сброс MSYN.
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\subsection{Арбитраж шины}
+
+\begin{frame}
+\frametitle{Централизованный арбитраж}
+\screenshotw{11cm}{centr-arbitration.png}
+\pause
+\screenshotw{11cm}{centr-arbitration-levels.png}
+\end{frame}
+
+\subsection{Разные типы циклов работы шины}
+
+\begin{frame}
+\frametitle{Блочное чтение}
+\screenshotw{11cm}{block-read-on-bus.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Контроллер прерываний}
+\screenshotw{12cm}{interrupt-controller.png}
+\end{frame}
+
+\section{Примеры шин}
+
+\subsection{DDR}
+\begin{frame}
+\frametitle{Конвейерная работа с памятью DDR}
+\begin{itemize}
+    \item Матричная организация памяти: row x col.
+    \pause\item Независимые «ранги» памяти (чипы, до 8 шт.) и «банки» (внутри одного чипа).
+    \pause\item Основные команды для банка памяти:
+    \begin{itemize}
+        \item ACTIVATE — «открывает» $i$-ую строку;
+        \item READ / WRITE — читает / пишет в $j$-й столбец;
+        \item PRECHARGE — «закрывает» текущую открытую строку.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Пример: 12 циклов работы на шине памяти DDR3}
+ACTIVATE = 2 такта, \hfill READ = 1 такт, \hfill PRECHARGE = 2 такта.
+\screenshotw{12cm}{pipelined-memory.png}
+\end{frame}
+
+\subsection{USB}
+\begin{frame}
+\frametitle{Обзор}
+Разработка: 1993–1998 г.\\
+Compaq, DEC, IBM, Intel, Microsoft, NEC, и Northern Telecom
+\begin{columns}
+    \column{5cm}
+\onslide<2->{\begin{block}{Задачи USB}
+\begin{enumerate}
+    \item «Нет» джамперам.
+    \item «Нет» развинчиванию корпуса.
+    \item Единый вид кабеля.
+    \item Питание из кабеля.
+    \item Поддержка устройств реального времени.
+    \item «Горячая» установка.
+    \item Дешевизна.
+\end{enumerate}
+\end{block}}
+
+    \column{5cm}
+    \screenshotw{5cm}{usb-logo.pdf}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Развитие шины USB}
+
+\begin{columns}
+    \column{5cm}
+
+    \begin{block}{Версии шины}
+    \begin{itemize}
+        \item USB 1.0: 1.5 Mbps, 1996;
+        \item USB 1.1: 12 Mbps, 1998;
+        \item USB 2.0: 480 Mbps, 2000;
+        \item USB 3.0: 5 Gbps, 2008.
+    \end{itemize}
+    \end{block}
+
+    \column{6cm}
+    \pause
+    \begin{block}{Преимущества USB 3.0}
+    \begin{itemize}
+        \item Скорость,
+        \item сила тока (900 вместо 500 мА),
+        \item полный дуплекс,
+        \item обратная совместмость.
+    \end{itemize}
+    \end{block}
+\end{columns}
+
+\pause
+
+\begin{block}{Основные характеристики}
+\begin{itemize}
+    \item 4 канала: питание (5В), земля, данные (D+, D-);
+    \item топология звезды (корневой хаб);
+    \item сетевая архитектура (пакеты).
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Транзакции на шине USB}
+\begin{columns}
+    \pause
+    \column{4.8cm}
+    \begin{block}{Виды}
+    \begin{itemize}
+        \item Управляющие (control),
+        \item прерывания (interrupt),
+        \item пакетные (bulk),
+        \item изохронные (isochronous).
+    \end{itemize}
+    \end{block}
+
+    \pause
+    \column{6.7cm}
+    \centering
+    Пример транзакций прерывания
+
+    \screenshotw{6.7cm}{usb-interrupt.png}
+
+    \screenshotw{3cm}{usb-transkey.png}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Примеры пакетов}%[fragile]
+
+\begin{minipage}{7cm}
+\begin{block}{Пакет IN: логическая структура}
+\begin{table}[h]
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Sync & PID & ADDR & ENDP & CRC5 & EOP\\\bottomrule
+\end{tabular}
+\end{table}
+\end{block}
+\end{minipage}
+
+\vspace{.4cm}
+\pause
+\screenshotw{12cm}{USB_signal_example.pdf}
+\end{frame}
+
+\end{document}

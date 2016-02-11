@@ -1,0 +1,67 @@
+\documentclass[
+\h%
+ucs,ignorenonframetext,hyperref={pdftex,unicode},xcolor=dvipsnames]{beamer}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,chains,calc}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{paratype}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{pbox}
+
+\newcommand{\screenshot}[1]{
+\begin{center}
+\includegraphics[width=12cm,keepaspectratio]{./images/#1}
+\end{center}
+}
+
+\newcommand{\screenshotw}[2]{
+\begin{center}
+\includegraphics[width=#1,keepaspectratio]{./images/#2}
+\end{center}
+}
+
+\usecolortheme{crane}
+\useoutertheme{infolines}
+\setbeamertemplate{navigation symbols}{}
+
+\author[А. М. Пеленицын]{А.~М.~Пеленицын\texorpdfstring{\\}{ }
+apel@sfedu.ru}
+
+\date{Весна 2015}
+
+\institute[Мехмат ЮФУ]{Южный федеральный университет \texorpdfstring{\\}{ }
+Институт математики, механики и компьютерных наук им. И.\,И.~Воровича\texorpdfstring{\\}{ }
+Кафедра информатики и вычислительного эксперимента}
+
+\subtitle{}
+
+\AtBeginSection[]
+{
+\begin{frame}<beamer>
+\frametitle{Содержание}
+\tableofcontents[currentsection,hideothersubsections]
+\end{frame}
+}
+
+\AtBeginSubsection[]
+{
+\begin{frame}<beamer>
+\frametitle{Содержание}
+\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]
+\end{frame}
+}
+
+\newcommand{\nspace}{\hspace{0pt}}
+\newcommand{\nbdash}{\nobreakdash-\nspace}
+\newcommand{\up}{\textsuperscript}
+\newcommand{\bslash}{\textbackslash}
+
+\newcommand{\link}[2]{\textcolor{blue}{\href{#1}{#2}}}
+
+\newcommand{\Wrapped}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
