@@ -1,0 +1,34 @@
+{\small
+\tikzset{
+>=stealth',
+  punktchain/.style={
+    rectangle,
+    rounded corners,
+    % fill=black!10,
+    draw=black, very thick,
+    text width=15em,
+    minimum height=2em,
+    text centered,
+    top color=white,
+    on chain},
+  every join/.style={->, thick,shorten >=1pt},
+}
+\begin{tikzpicture}
+  [node distance=.7cm,
+  start chain=going below,]
+     \node[punktchain, join, bottom color=lime!60] (PL)
+         {Языки «высокого уровня»};
+
+     \node[punktchain, join, bottom color=teal!75] (ASM)
+         {Язык ассемблера};
+
+     \node[punktchain, join, bottom color=blue!50] (BIN)
+         {«Машинный код»\\(уровень набора инструкций, Instruction Set Arch., \textbf{ISA})};
+
+     \node[punktchain, join, bottom color=yellow!60] (MuCode)
+         {Микрокод процессора\\(\textbf{микроархитектура})};
+
+     \node[punktchain, join, bottom color=red!60] (DL)
+         {Схемы цифровой логики};
+\end{tikzpicture}
+}

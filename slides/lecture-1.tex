@@ -1,4 +1,4 @@
-\newcommand{\h}{%handout,
+\newcommand{\h}{handout,%
 }
 
 \input{preamble}
@@ -19,39 +19,44 @@
 \section {Организационная информация}
 
 \begin{frame}{Всё, что вы хотели знать о курсе\ldots}
-\begin{itemize}[<+->]
-	\item Продолжительность = 1 семестр (2 модуля), отчётность = зачёт.
-	\item БАРС (подробно~---
-		в \link{http://edu.mmcs.sfedu.ru/mod/resource/view.php?id=5977}{УКД}):\footnotesize{
+\begin{enumerate}
+	\pause\item Продолжительность = 1 семестр (2 модуля), отчётность = зачёт.
+
+	\pause\item БАРС (подробно~---
+		в \link{http://edu.mmcs.sfedu.ru/mod/resource/view.php?id=5977}{УКД}):{\footnotesize
 		\begin{itemize}
 		\item зачёт ${\geqslant}$ 60 баллов,
-		\item ТК/РК = 45/55,
-		\item ТК: лаб, дз-лаб, дз-лек; доработка лаб — в рамках дз-лаб!.
-		\item РК: 2 ${\times}$ КР-лек = 20+15, КР-лаб = 20.
+		\item ТК/РК = 59/41,
+		\item ТК: лаб, дз-лаб, дз-лек (доработка лаб — в рамках дз-лаб!).
+		\item РК: 2 ${\times}$ КР-лек = 15+10, КР-лаб = 16.
 		\end{itemize}}
-	\item Дедлайны для дз (все публикуются в пятницу вечером): \footnotesize{
+
+	\pause\item Дедлайны для дз (все публикуются воскресенье вечером): {\footnotesize
 		\begin{itemize}
-		\item д/з по лекциям  = 1 неделя (лучше делать до новой лекции),
+		\item д/з по лекциям  = 1 неделя (но лучше делать до новой лекции),
 		\item д/з по практике = 11 дней.
 		\end{itemize}}
-	\item Страница курса «\link{http://edu.mmcs.sfedu.ru/course/view.php?id=170}{Архитектура компьютеров}» на \link{http://edu.mmcs.sfedu.ru}{edu.mmcs.sfedu.ru}.\footnotesize{
+
+	\pause\item Страница курса «\link{http://edu.mmcs.sfedu.ru/course/view.php?id=170}{Архитектура компьютеров}» на \link{http://edu.mmcs.sfedu.ru}{edu.mmcs.sfedu.ru}.{\footnotesize
 		\begin{enumerate}
 		\item Регистрация на сайте.
-		\item Запись на курс с ключом:\\
-		три цифры ABC, A =  номер курса (2), B = номер группы,\\
-		C = номер недели, на которой вы пришли на практику впервые (1/2).
+		\item Запись на курс с ключом: три цифры ABC, A =  номер курса (2), B = номер группы, C = левая или правая половинка в расписании (1/2) (кроме 2.3 и 2.4, у них — 23 и 24).
 		\end{enumerate}}
-	\item \link{http://mmcs.sfedu.ru/~ulysses/timetable.html}{Моё расписание},
-		почта — на первом слайде, форум
-		\\ \footnotesize{консультации (ауд. 203): ср (14:00), чт (14:00), сб (16:00) или на переменах}
-\end{itemize}
+
+	\pause\item \link{http://mmcs.sfedu.ru/~ulysses/timetable.html}{Моё расписание},
+		почта — на первом слайде,
+        \link{http://forum.mmcs.sfedu.ru/t/2-kurs-pmi-i-fiit-cs221-arhitektura-kompyutera/831}{форум}.
+		\\ \footnotesize{Консультации (ауд. 203): пт (15:20), сб (15:20) или на переменах}
+\end{enumerate}
 \end{frame}
 
 \begin{frame}{Литература}
 \begin{enumerate}
-	\item \emph{Таненбаум~Э., Остин~Т.} Архитектура компьютера / 6-е изд.(+CD) — СПб.: Питер, 2013. — 816 с.
+	\item \emph{Таненбаум~Э., Остин~Т.} Архитектура компьютера / \textbf{6-е изд.}(+CD) — СПб.: Питер, 2013. — 816 с.
 
 	\item \emph{Stallings~W.} Computer Organization and Architecture /  Prentice Hall; 9 edition (March 11, 2012). 792 p.
+
+    \item \emph{Паттерсон Д., Хеннесси Д.} Архитектура компьютера и проектирование компьютерных систем / \textbf{4-е изд.} — СПб.: Питер, 2012. — 784 с.
 
 	\item \emph{Орлов~С.\,П., Ефимушкина~Н.\,В.}
 	\link{http://window.edu.ru/resource/007/77007/files/organizatsiya.pdf}%
@@ -65,44 +70,115 @@
 
 \begin{frame}{Домашнее задание}
 \begin{itemize}
-	\item (желательно) раздобыть книгу Таненбаума (6-е издание!)
-	\item прочитать по ней начало главы 1 («Введение») до пункта «Современные многоуровневые машины» включительно и Приложение В (про ассемблер)
-	\item понимать работу инструкций MUL, DIV и LOOP ассемблера Intel~8088
-	\item «Домашнее задание 1» (лекции) на странице курса — в пятницу вечером
+	\item (Желательно) раздобыть книгу Таненбаума (6-е издание!).
+	\item Прочитать по ней начало главы 1 («Введение») до пункта «Современные многоуровневые машины» включительно и Приложение В (про ассемблер).
+	\item Понимать работу инструкций MUL, DIV и LOOP ассемблера Intel~8088.
+	\item «Домашнее задание 1» (лекции) на странице курса — в воскресенье вечером.
 \end{itemize}
 \end{frame}
+
+\section{Зачем нужен курс архитектуры компьютера}
+
+\begin{frame}{Довод 1: консенсус экспертов}
+\begin{columns}
+    \column{0cm}
+    \column{10cm}
+\begin{block}{Чему нужно учить специалистов по информатике}
+    \textcolor{blue}{\href{https://www.acm.org/education/CS2013-final-report.pdf}{Computer Science Curricula 2013}}
+    \small by
+    \begin{itemize}
+        \item Association for Computing Machinery (ACM),
+        \item IEEE Computer Society.
+    \end{itemize}
+\end{block}
+\end{columns}
+
+\pause
+\begin{block}{Фрагмент CSC2013: Architecture and Organization, цитата}
+\begin{quoting}
+A professional in any field of computing should \textbf{not} regard the computer as just a \textbf{black
+box} that executes programs by \textbf{magic}.
+\end{quoting}
+\end{block}
+\end{frame}
+
+\begin{frame}{Довод 2: исследования в институте в области HPC}
+High-Perfomance Computing
+
+\begin{block}{Научная школа ВЦ РГУ → ЮГИНФО ЮФУ → Института ММКН}
+\textit{Разработка и развитие специальных программных средств для управления вычислительными ресурсами центров высокопроизводительных вычислений.} // \link{http://uginfo.sfedu.ru/science}{uginfo.sfedu.ru/science}
+\end{block}
+\end{frame}
+
+\begin{frame}{Научная школа кафедры АДМ в области HPC}
+\screenshotw{12cm}{ops_seminar_2011.jpg}
+
+— \link{http://ops.rsu.ru/about.shtml}{ops.rsu.ru}
+\end{frame}
+
+\begin{frame}{Довод 3: прикладное программирование}
+\screenshotw{7cm}{sipser-vs-videogames.jpg}
+\end{frame}
+
+\begin{frame}{Довод 3: прикладное программирование}
+Проблема 7-классника (ВКШ)
+\screenshotw{12cm}{fp-pitfalls.jpg}
+\end{frame}
+
 
 \section{Организация и архитектура вычислительных систем}
 
 \begin{frame}{Организация vs. архитектура}
 
 \pause
-\begin{block}{Архитектура}
-Атрибуты системы, видимые программисту. Интерфейс.
+\begin{block}{Архитектура (\textasciitilde{} «интерфейс»)}
+Атрибуты системы, видимые программисту. Контракт.
 
 \pause
 \begin{itemize}
-	\item Инструкции, которые понимает данный процессор,
+	\item Набор инструкций, которые понимает данный процессор,
 	\item количество бит для представления чисел,
-	\item способы адресации.
+	\item способы адресации (указания места операндов инструкций).
 \end{itemize}
 \end{block}
 
 \pause
-\begin{block}{Организация}
+\begin{block}{Организация (\textasciitilde{} «реализация»)}
 Набор устройств и способ их взаимосвязи для реализации
-спецификации (архитектуры).
+контракта (архитектуры).
 
 \pause
 \begin{itemize}
-	\item Напряжение тока для передачи сигналов,
-	\item интерфейсы для связи устройств,
-	\item технологии памяти.
+	\item Напряжение тока на кристалле процессора,
+	\item технологии связи устройств (шины),
+	\item технологии реализации памяти.
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}{Организация: примеры}
+\begin{frame}{Организация vs. архитектура: «жизненные» примеры}
+
+\pause
+\begin{block}{«Архитектура X86» (x64, ARM, …)}
+\begin{itemize}
+    \item Intel,
+    \item AMD.
+\end{itemize}
+\end{block}
+
+\pause
+\begin{block}{Микроархитектура процессоров Intel: Haswell (Ivy Bridge, …)}
+\begin{itemize}
+    \item разный объём кэш-памяти,
+    \item наличие дополнительных ускорителей.
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Организация: основы}
+
+\pause
 \begin{columns}
 	\column{6cm}
 	\screenshotw{6cm}{a-computer.pdf}\pause
@@ -112,43 +188,47 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}{Подход к понятию многоуровневой архитектуры}
-\begin{itemize}[<+->]
-	\item Назначение компьютера,
-	\item машинный язык,
-	\item проблема несоответствия,
-	\item решение: языки и трансляторы
-	\item техническое замечание:\\
-		трансляторы = компиляторы + интерпретаторы\\
-		\onslide<6>{\footnotesize{(в книге Таненбаума: компиляторы = трансляторы).}}
-\end{itemize}
-\end{frame}
-
 \begin{frame}{Современная многоуровневая архитектура}
+\pause
 \begin{columns}
 	\column{6cm}
 %vspace{-.2cm}
-\screenshotw{6cm}{multi-level-computer.pdf}
+%\screenshotw{6cm}{multi-level-computer.pdf}
+\input{images/multi-level-computer}
 	\column{6.5cm}
 \pause
-Организация:
+\vspace{-.5cm}
 \begin{itemize}[<+->]
 	\item компиляторы, статические анализаторы,
 			IDE, библиотеки;
 
-	\vspace{.6cm}
+	\vspace{.5cm}
 	\item (диз)ассемблеры, отладчики, линкёры;
 
 	\vspace{.6cm}
-	\item ОЗУ, системная шина, ЦП,
+	\item ОЗУ, системная шина, ЦП;
 
-	\vspace{.8cm}
-	\item внутренняя шина, тракт данных
+	\vspace{1.5cm}
+	\item внутренняя шина, тракт данных;
 
 	\vspace{.9cm}
-	\item логические вентили и схемы из них, булевы формулы
+	\item логические вентили и схемы.
 \end{itemize}
 \end{columns}
+\end{frame}
+
+\begin{frame}{Уровни, скрытые на прошлом слайде}
+
+\large
+\begin{itemize}\itemsep=.5cm
+    \item Предметно-ориентированные языки\\
+    (Domain-Specific Languages, DSL).
+
+    \item Операционная система.
+
+    \item Физический уровень.
+\end{itemize}
+
 \end{frame}
 
 \section {Немного о практике}
@@ -172,55 +252,13 @@ res:    .SPACE  2
 \end{verbatim}
 \end{block}
 	\column{4.5cm}\pause
-Элементы языка\pause:
+Элементы языка:
 \begin{itemize}
 	\item мнемоники,
 	\item директивы,
 	\item метки,
 	\item способы адресации.
 \end{itemize}
-\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Пример посложней (ассемблер NASM)}
-\begin{block}{Длина C-строки}
-\footnotesize{
-\begin{verbatim}
-     ;---------------------------------------------------
-     ; Функция zstr_count:
-     ; Определяет длину ASCII-строки, завершающейся нулём
-     ; вход:   eax = адрес первого символа строки
-     ; выход:  ecx = длина строки
-
-1                      zstr_count:
-2  00000030 B9FFFFFFFF      mov  ecx, -1
-3
-4                      .loop:
-5  00000035 41              inc  ecx
-6  00000036 803C0800        cmp  byte [eax + ecx], 0
-7  0000003A 75F9            jne  .loop
-8
-9  0000003C C3              ret
-\end{verbatim}}
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile]{Утилиты ассемблирования программ для Intel 8088}
-\begin{columns}
-	\column{5cm}
-\begin{itemize}
-	\item as88 — ассемблер,
-	\item s88 — симулятор,
-	\item t88 — трасёр (отладчик).
-\end{itemize}
-\pause
-	\column{6cm}
-\begin{block}{Файл \texttt{test.s}}
-\begin{verbatim}
-as88 test.s
-t88 test.s
-\end{verbatim}
-\end{block}
 \end{columns}
 \end{frame}
 

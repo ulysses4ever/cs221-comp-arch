@@ -5,13 +5,17 @@ ucs,ignorenonframetext,hyperref={pdftex,unicode},xcolor=dvipsnames]{beamer}
 \usepackage[russian]{babel}
 \usepackage[T2A]{fontenc}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning,chains,calc}
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+    decorations.pathreplacing,decorations.pathmorphing,shapes,%
+    matrix,shapes.symbols}
 \usepackage{graphicx}
 \usepackage{fixltx2e}
 \usepackage{paratype}
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{pbox}
+
+\usepackage[font=itshape]{quoting}
 
 \newcommand{\screenshot}[1]{
 \begin{center}
@@ -65,3 +69,5 @@ apel@sfedu.ru}
 
 \newcommand{\Wrapped}[2][c]{%
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+\setbeamertemplate{enumerate subitem}{(\roman{enumii})}
