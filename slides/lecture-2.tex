@@ -37,22 +37,29 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Машина Лейбница (вторая половина XVII в.)}
+\begin{frame}{Арифмометр Лейбница (вторая половина XVII в.)}
     \begin{columns}
-    \column{4cm}
+    \column{3.7cm}
         \begin{block}{\small Готфрид Вильгельм Лейбниц (1646–1716)}
-        \begin{center}
-            \screenshotw{3.2cm}{leibniz.jpg}
-        \end{center}
+            \centering\includegraphics[width=3.5cm,keepaspectratio]{./images/leibniz.jpg}
+            %\screenshotw{3.5cm}{leibniz.jpg}
         \end{block}
 
-    \column{7cm}
-    \begin{center}
-        \screenshotw{6cm}{leibnitzrechenmaschine.jpg}
-    \end{center}
+    \column{7.5cm}
 
-    \small Десятичная система;\\
+\begin{block}{Stepped Reckoner}
+%        \screenshotw{6cm}{leibnitzrechenmaschine.jpg}
+            \centering\includegraphics[width=6cm,keepaspectratio]{./images/leibnitzrechenmaschine.jpg}
+
+    \small \par Десятичная система;\\
         сложение, вычитание, умножение, деление.
+\end{block}
+
+%    \vspace{.7cm}
+
+    \small
+    \onslide<2->{%
+    \alert{Двоичная} система.}
     \end{columns}
 \begin{quote}
     \small “[...] it is beneath the dignity of excellent men to waste their time in calculation when any peasant could do the work just as accurately with the aid of a machine.”
@@ -91,7 +98,7 @@
             \item память, \item АЛУ,\item УУ (условия, циклы),
             \item I/O (перфокарты).
         \end{itemize}
-        \onslide<3>{\item Luigi Menabrea, 1943,\\
+        \onslide<3>{\item Luigi Menabrea, 1843,\\
         “Sketch of the Analytical Engine”.}
     \end{itemize}
     \end{columns}
@@ -99,17 +106,19 @@
 
 \begin{frame}{XX в. до 1945 г.}
 \pause
-\begin{itemize}
+\begin{block}{Электро-механические и первые электронные машины}
+\begin{itemize}\itemsep=1cm
     \item Z3 (1941) — Конрад Цузе, Германия;
-        \\ \onslide<3->{{\small binary, floating-point, булева логика,
-             без условий.}}
+        \\ \onslide<3->{{\small двоичная, плавающая точка, булева логика,
+             без ветвлений.}}
     \item Компьютер Атанасова-Берри (ABC, 1942), США;
-        \\ \onslide<4->{{\small binary, конденсаторы для памяти, решает СЛУ.}}
+        \\ \onslide<4->{{\small двоичная, электронная, конденсаторы для памяти, решает СЛУ.}}
 
     \item Harvard Mark I (1944) — Говард Айкен, IBM;
-        \\ \onslide<5->{{\small decimal, cf.~Ч.~Бэббидж, «гарвардская архитектура», loops.}}
+        \\ \onslide<5->{{\small десятичная, см.~Ч.~Бэббидж, «гарвардская архитектура», “loops”.}}
 
 \end{itemize}
+\end{block}
 \end{frame}
 
 \subsection {(1) Электронные ламповые компьютеры}
@@ -164,7 +173,7 @@
 \end{itemize}
 
 \pause
-\begin{block}{Мейнфреймы: IBM и 7 гномов}
+\begin{block}{Мейнфреймы: «IBM и 7 гномов»}
 Burroughs, UNIVAC, NCR, Control Data, Honeywell, General Electric, RCA.
 \end{block}
 \end{frame}
@@ -179,8 +188,8 @@ Burroughs, UNIVAC, NCR, Control Data, Honeywell, General Electric, RCA.
 \begin{frame}{Интегральные схемы}
 \screenshotw{4.5cm}{chips.jpg}
 \vspace{-.3cm}
-Изобретатели: Джон Килби, Роберт Нойс и др.…\\
-Одна микросхема = десятки транзисторов
+Изобретатели: Джон Килби, Роберт Нойс и др.\\
+Одна микросхема = десятки транзисторов.
 \end{frame}
 
 \begin{frame}{IBM System/360 (1965)}
@@ -233,7 +242,7 @@ Burroughs, UNIVAC, NCR, Control Data, Honeywell, General Electric, RCA.
 \end{block}
 \pause
 \begin{itemize}
-    \item СБИС (\textbf{VLSI}): одна микросхема = десятки тысяч транзисторов
+    \item СБИС (\textbf{VLSI}): одна микросхема = десятки тысяч транзисторов,
     \item Intel 8080 (1974): Altair,
     \item Троица (1977 г.): PET, Apple II, TRS-80,
     \item IBM PC @ Intel 8088 (1981 г.): MS-DOS, OS/2, Windows…

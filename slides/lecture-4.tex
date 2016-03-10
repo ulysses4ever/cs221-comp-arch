@@ -13,12 +13,12 @@
 
 \begin{frame}
 \frametitle{Содержание}
-\tableofcontents[hideallsubsections]
+\tableofcontents%[hideallsubsections]
 \end{frame}
 
 \section {Центральный процессор}
 
-\subsection{Устройство и порядок работы}
+\subsection{Организация и порядок работы}
 
 \begin{frame}
 \frametitle{Схема компьютера с общей шиной}
@@ -26,8 +26,8 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{АЛУ + регистры = тракт данных (Datapath)}
-\screenshotw{7cm}{data-path.png}
+\frametitle{АЛУ + регистры + шины = тракт данных (Datapath)}
+\screenshotw{8cm}{data-path.png}
 \end{frame}
 
 \begin{frame}
@@ -73,18 +73,24 @@
 \end{frame}
 
 \begin{frame}{Изобретение микропрограммирования}
-\begin{itemize}
+\begin{columns}
+    \column{6cm}
+\begin{itemize}[<+->]\itemsep=.7cm
     \item 1940-е: только ISA и ЦЛУ;
-    \pause\item 1951 г., Морис Уилкс (Maurice Wilkes), университет Кэмбриджа: идея трёхуровнего компьютера, интерпретация команд ISA;
-    \pause\item 1970-е: идея микропрограммирования укрепилась в мейнстриме.
+    \item 1951 г., Морис~Уилкс (Maurice~Wilkes), университет~Кэмбриджа: идея трёхуровнего компьютера, интерпретация команд ISA;
+    \item 1970-е: идея микропрограммирования укрепилась в мейнстриме.
 \end{itemize}
+
+    \column{5.5cm}
+\onslide<2->{\screenshotw{5.5cm}{Wilkes.jpg}}
+\end{columns}
 \end{frame}
 
 \begin{frame}{1960/70-е: гонка наборов инструкций}
-\begin{itemize}
-\item INC vs. ADD 1;
+\begin{itemize}\itemsep=.4cm
+\item из нашего опыта: INC vs. ADD 1 \pause(и не только);
 \pause\item микропрограммные реализации:
-    \begin{itemize}
+    \begin{itemize}\itemsep=.2cm
     \item умножение/деление,
     \item плавающая точка,
     \item вызов подпрограмм,
@@ -97,35 +103,40 @@
 
 \begin{frame}
 \frametitle{Преимущества интерпретации команд}
-\begin{itemize}
-    \item Исправление,
-    \item добавление,
-    \item проверка / документирование.
+\begin{block}{Простота}\pause
+\begin{itemize}\itemsep=.4cm
+    \item отладки и документирования,
+    \item исправления,
+    \item добавления.
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
 \frametitle{Компьютеры с интерпретаторами: CISC}
-\begin{itemize}
+
+\begin{block}{\alert{Complex} Instruction Set Computer: 60-е — 80-е гг.}
+\begin{itemize}\itemsep=.4cm
     \item Компьютеры IBM,
     \item все компьютеры 60-х/70-х, кроме самых дорогих (CDC),
     \item персональные компьютеры,
-    \item роль ПЗУ.
+    \item роль ПЗУ (ROM).
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{CISC vs. RISC}
-\begin{itemize}
-    \item RISC-архитектуры (Reduced Instruction Set Computer):
-    \begin{itemize}
+\frametitle{CISC vs. RISC: 90-е — 2010-е гг.}
+\begin{itemize}\itemsep=.6cm
+    \item RISC-архитектуры (\textbf{\textcolor{blue!60!black}{Reduced}} Instruction Set Computer):
+    \begin{itemize}\itemsep=.2cm
         \item RISC I / II в Беркли (Дэвид Паттерсон, Карло Секвин; 1980),\\Sun SPARC,
         \item MIPS в Стенфорде (Джон Хеннеси; Sony PS, PS 2, PSP),
         \item IBM Power Architecture (Cell в PS 3, маршрутизаторы Cisco),
         \item ARM (Android-гаджеты, IPad, MS Surface, Canon PowerShot A470, …),
         \item Atmel AVR (Arduino).
     \end{itemize}
-    \pause\item CISC (монополисты): Мейнфреймы IBM, Intel, DEC VAX.
+    \pause\item CISC (монополисты): Мейнфреймы IBM, x86, DEC VAX.
     \pause\item Проблемы RISC, завоевание новых рынков.
 \end{itemize}
 \end{frame}
@@ -187,10 +198,10 @@
 \begin{frame}
 \frametitle{Суперскалярная архитектура процессора}
 \screenshotw{9.5cm}{superscalar.png}
-\pause{\vspace{-.5cm}\small\begin{itemize}[<+->]
+\pause{\vspace{-.5cm}\begin{itemize}[<+->]
     \item Начало: CDC 6600.
-    \item Вопрос: что позволило разместить все блоки C4 на одном процессоре?
-    \item SISD~— Single Instruction, Single Data в <<таксономии Флинна>> (Flynn).
+    \item Вопрос: {\small что позволило уместить все блоки C4 на одном процессоре?}
+    \item SISD~— Single Instruction, Single Data в \small{<<\alert{таксономии Флинна}>> (Flynn)}.
 \end{itemize}}
 
 \end{frame}
@@ -210,7 +221,7 @@
 \end{frame}
 
 
-\begin{frame}{Мультипроцессоры и мультикомпьютеры — MIMD}
+\begin{frame}{Мультипроцессоры и мультикомпьютеры —~\small{MIMD~(NUMA)}}
 \screenshotw{6cm}{multiproc-1.png}
 \pause{\hrule\screenshotw{6cm}{multiproc-2.png}}
 \end{frame}
