@@ -4,132 +4,240 @@ handout,%
 
 \input{preamble.tex}
 
-\usepackage{tikz}
-\usetikzlibrary{arrows,automata}
+\usepackage{wasysym}
+\usepackage{marvosym}
 
-\usepackage{framed}
-\usepackage{tabu}
+\title[Числовые типы данных]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 9. Уровень набора инструкций:\texorpdfstring{\\}{}числовые типы данных}
 
-\newcommand{\p}{\textbf{\textcolor{green}{+}}}
-\newcommand{\m}{\textbf{\textcolor{red}{–}}}
 
-\title[Цифровая логика: схемы памяти]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 9. Цифровой логический уровень:\texorpdfstring{\\}{ }тактовые генераторы, схемы памяти}
-
+\newcommand{\LRA}{\ensuremath{\leftrightarrow}}
+%\newcommand{\m}[1]{\texttt{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% НАЧАЛО ДОКУМЕНТА %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
 \begin{frame}
 \titlepage
 \end{frame}
 
-\section{Тактовые генераторы (clocks)}
 \begin{frame}
-\frametitle{Модификации тактовых генераторов}
-\screenshotw{10cm}{clocks.png}
+\frametitle{Содержание}
+\tableofcontents[hideallsubsections]
 \end{frame}
 
-\section {Схемы памяти}
+\begin{frame}{Что значит поддержка числового типа данных}
 
-\subsection{Малые последовательностные схемы}
+\pause
+\begin{block}{1. Двоичное представление}
+    Как будет представлено каждое число из интересующего множества
+    в двоичном виде (его \emph{битовая маска}).
+\end{block}
 
-\begin{frame}
-\frametitle{SR-защёлка (latch)}
-\screenshotw{7cm}{SR-latch.png}
+\pause
+\begin{block}{2. Алгоритмы для арифметических операций}
+Для каждой $n$-арной операции и любых $n$ допустимых битовых масок
+должен быть определён результат или явно указано на его отсутствие.
+Результат должен определяться конструктивно (с помощью алгоритма).
+\end{block}
+
+\pause
+\begin{block}{Основные задачи}
+\pause
+\begin{itemize}[<+->]
+    \item Эффективность представления и алгоритмов.
+    \item Обработка ошибок.
+\end{itemize}
+\end{block}
+
 \end{frame}
 
-\begin{frame}
-\frametitle{Два устойчивых состояния SR-защёлки (latch)}
-\screenshotw{12cm}{SR-latch-stable-states.png}
+\section{Целые числа со знаком}
 
-\begin{minipage}{8cm}
-\begin{framed}
-\vspace{-.2cm}
-        \parbox{4cm}{Конечный автомат для\\
-            устойчивых состояний\\SR-защёлки}
-        \parbox{3cm}{\input{misc/sr-automata.tex}}
-\vspace{-.2cm}
-\end{framed}
-\end{minipage}
-\end{frame}
+\begin{frame}{Базовые константы и операции}
 
-\begin{frame}
-\frametitle{Синхронная SR-защёлка}
-\screenshotw{12cm}{SR-synch.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Синхронная D-защёлка}
-\screenshotw{12cm}{D-synch-latch.png}
-\end{frame}
-
-%\begin{frame}
-%\frametitle{Синхронная JK-защёлка}
-%\screenshotw{11cm}{JK-latch.png}
-%\end{frame}
-
-\begin{frame}
-\frametitle{Триггеры (flip-flops)}\vspace{-.7cm}
 \begin{columns}
-    \column{5cm} \pause\screenshotw{5cm}{edge-generator.png}
-    \column{7cm} \pause\screenshotw{7cm}{edge-generator-timing.png}
+    \column{3cm}
+\begin{block}{Константы}
+\pause
+\begin{itemize}
+    \item 1,
+    \item $-1$,
+    \item нуль,
+    \item min / max.
+\end{itemize}
+\end{block}
+
+\pause
+    \column{7cm}
+\begin{block}{Операции}
+\begin{itemize}
+    \item {\color{red}Противоположный элемент.}
+    \item Сложение: как беззнаковое\\ \hfill(если повезёт).
+    \item Вычитание: противоположный и сложение (если повезёт).
+\end{itemize}
+\end{block}
 \end{columns}
+
 \end{frame}
 
-\subsection{Средние последовательностные схемы}
+\begin{frame}{Основные способы представления (1)}
+
+\pause
+\begin{block}{Знаковый бит (signed magnitude)}
+    \begin{itemize}
+        \pause \item $-1_{10}$ = \pause $10\ldots 01_2$;
+        \pause \item нуль: \pause две штуки, $*0\ldots 0$;
+        \pause \item $m$ разрядов $\Rightarrow$ $|\max| = |\min| = $ \pause $2^{m-1} - 1$ = $*1\ldots1_2$;
+        \pause \item $1_{10} = 0 \ldots 01_2 \LRA \text{\fbox{поменять старший бит}} \LRA 10 \ldots 01_2 = -1_{10}$.
+    \end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Дополнительный код (two's complement)}
+    \begin{itemize}
+        \pause \item $-1_{10}$ = \pause $1\ldots 1_2$
+            \pause ( = \color{red}{$-2^{m-1} + \sum^{m-2}_{i=0}2^i$} \color{black})
+            \pause $\Longleftarrow$  $2^m - 1 = \sum^{m-1}_{i=0}2^i$;
+        \pause \item нуль: \pause одна штука, $0\ldots 0$;
+        \pause \item $\min$ = \pause $-2^{m-1}$;
+            \pause $\max$ = \pause $2^{m-1} - 1$;
+        \pause \item $1_{10}$ = $0…01$ → \pause \fbox{not} → $1…10$ → \fbox{inc} → $1…1$ = $-1$.
+    \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Основные способы представления (2)}
+
+\begin{block}{$m$-разрядная система со смещением}
+\pause
+Пример. Пусть $m=4$, смещение $7$ тогда
+    \begin{itemize}
+        \item  $\min$ = \pause $0000_2$ \pause = $-7_{10}$ (= величина смещения),
+        \pause\item  $0_{10}$ = \pause $0111_2$,
+        \pause\item  $1_{10}$ = \pause $1000_2$,
+        \pause\item  $-1_{10}$ = \pause $0110_2$.
+    \end{itemize}
+\end{block}
+
+\pause
+\emph{Замечание}. Для $m$-разрядных чисел смещение обычно задаётся равным $2^{m-1}$
+или $2^{m-1} - 1$.
+\end{frame}
+
 
 \begin{frame}
-\frametitle{Схема 4-битного регистра}
-\screenshotw{5.5cm}{register-curcuit.jpg}
+\frametitle{Некоторые операции со знаковыми целыми}
+\begin{itemize}
+    \item Вычитание через сложение и взятие противоположного?
+        \begin{itemize}
+            \pause\item Знаковый бит \pause{\LARGE  \Frowny{}}; %  $-$;
+            \pause\item дополнительный код\pause:
+            $(3_{10}=0011)$ $+$ $(-2_{10}=1110)$ \pause $= 0001 = 1_{10}$ \pause{\LARGE  \Smiley{}}.  %$+$.
+        \end{itemize}
+        \pause Следующие операции­ — для дополнительного кода.
+    \pause\item Арифметический и логический сдвиги.
+    \pause\item Знаковое расширение (sign extension). \\
+        \pause Применение:
+        \begin{itemize}
+            \pause\item деление с помощью \texttt{CWD} / \texttt{IDIV};
+            \pause\item преобразования типов \texttt{short} → \texttt{int} в C.
+        \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Числа с плавающей точкой}
+
+\begin{frame}
+\frametitle{Представления рациональных чисел}
+\begin{itemize}
+    \pause\item Числа с фиксированной точкой:\\
+    \begin{center}
+    fix. $n$, $m$ $\Rightarrow$
+    $\pm a_n a_{n-1} \ldots a_1 , b_1 \ldots b_{m-1} b_m$.
+	\end{center}
+
+    \pause\item Числа с плавающей точкой (знак, мантисса, экспонента):
+    \[
+        a = \pm f * b^{e}, 0 \leqslant f < 1, b\in \{2,10, \ldots\} ;
+    \]
+
+    \pause\item нормализованная мантисса\pause, оптимизация для бинарного случая.
+\end{itemize}
+
+\pause
+\begin{block}{Пример: мантисса — 3 разряда, экспонента — 2, $b=10$}
+
+    \screenshotw{12cm}{floating-point-vs-real-line.png}
+
+\end{block}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{IEEE 754, 1985 г., William Kahan}
+
+\begin{columns}
+    \column{7cm}
+
+Стандарт определяет
+\begin{itemize}[<+->]
+    \item арифметические форматы (числа, $\pm 0$, $\pm \infty$) и способ их кодирования: %\pause
+\setbeamertemplate{enumerate item}{\arabic{enumi})}
+
+    \begin{enumerate}
+        \item одинарная точность (single precision, 32 бита) aka float,
+        \item двойная точность (double precision, 64 бита) aka double,
+        \item extended precision (80 бита) aka long double;
+    \end{enumerate}
+    \item правила выполнения арифметических операций;
+    \item правила округления;
+    \item поведение в исключительных ситуациях (/ ноль, переполнение…);
+    \item рекомендации…
+\end{itemize}
+%\screenshotw{10cm}{ieee-formats.png}
+
+    \column{5cm}
+    \screenshotw{5cm}{Kahan.jpg}
+
+\end{columns}
+
+
 \end{frame}
 
 \begin{frame}[plain]
-\frametitle{4x3-схема памяти на D-триггерах}
-\screenshotw{7.1cm}{4x3-memory-chip.pdf}
-\end{frame}
-
-\subsection{VLSI-последовательностные схемы}
-
-\begin{frame}
-\frametitle{4 Mbit-схемы памяти}
-\screenshotw{11cm}{large-memory-chips-1.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{512 Mbit-схемы памяти}
-\screenshotw{11cm}{large-memory-chips-2.png}
-\end{frame}
-
-\subsection{Разнообразие технологий памяти}
-
-\begin{frame}
-\frametitle{Типы микросхем ОЗУ}
-\begin{itemize}[<+->]
-    \item Статическая и динамическая память (SRAM vs. DRAM).
-    \item Синхронная динамическая память (SDRAM).
-    \item Double Data Rate (DDR) SDRAM.
+\frametitle{Характеристики основных форматов чисел в IEEE 754}
+\vspace{-.3cm}\screenshotw{12cm}{ieee-754-props.png}\vspace{-.4cm}
+\pause\small В общем случае:
+\begin{itemize}
+    \item \vspace{-.1cm} в поле экспоненты хранится число, которое нужно уменьшить на~127~(1023), чтобы догадаться о значении экспоненты;
+    \pause\item \vspace{-.1cm} в поле мантиссы хранится число $f$ из интервала $[1,2)$ в двоичном виде ($f = f_0 2^0 + f_1 2^{-1} + f_2 2^{-2} \ldots$)\pause, \\ для $\exp\not = \min$ старший бит $f_0$ не хранится, а подразумевается (нормализация+оптимизация).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Сравнительная таблица: типы микросхем ОЗУ и ПЗУ}
-%\screenshotw{12cm}{memory-chips.png}
-\scriptsize
-\begin{table}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabu} to \textwidth {lllX[.4]X[.4]X}
-\toprule
-\textbf{№} & \multicolumn{1}{c}{\textbf{Тип}} & \multicolumn{1}{c}{\textbf{Операции}} & \centering\textbf{Побайтовая}\newline \textbf{запись} & \centering\textbf{Энерго-}\newline\textbf{НЕзависимость} & \multicolumn{1}{c}{\textbf{Области применения}}                                      \\
-\midrule
-1 & SRAM                             & R/W                                   & \p                                                                                        & \m                                                                                            & Регистры, кэш                                                                        \\
-2 & DRAM                             & R/W                                   & \p                                                                                        & \m                                                                                            & Оперативная память (раньше)                \\
-3 & SDRAM                            & R/W                                   & \p                                                                                        & \m                                                                                            & Оперативная память (сегодня)               \\
-4 & ROM                              & RO                                    & \m                                                                                        & \p                                                                                            & Крупные партии \newline микроконтроллеров и т. п.  \\
-5 & PROM                             & RO                                    & \m                                                                                        & \p                                                                                            & Мелкие партии \newline микроконтроллеров и т. п.   \\
-6 & EPROM                            & \textit{Больше} R                     & \m                                                                                        & \p                                                                                            & Прототипирование \newline микроконтроллеров и т. п. \\
-7 & EEPROM                           & Больше R                              & \p                                                                                        & \p                                                                                            & Прототипирование\newline микроконтроллеров и т. п. \\
-8 & Флеш                             & R/W                                   & \m                                                                                        & \p                                                                                            & Камеры, смартфоны…\\
-\bottomrule
-\end{tabu}
-\end{table}
+\frametitle{Примеры перевода дробных чисел\\в формат IEEE 754 (одинарная точность)}
+\begin{itemize}\itemsep=.5cm
+    \item $1.0$ = \pause $+ 1.0 \cdot 2^0$ = \pause
+        \\$\qquad$
+            sgn: \m{0}, exp: \m{01111111}, m: \m{0\ldots 0} = \pause
+        \\$\qquad$\m{3F80 0000},
+    \item \pause $0.5$ = \pause
+        $+ 1.0 \cdot 2^{-1}$ = \pause
+        \\$\qquad$
+            sgn: \m{0}, exp: \m{01111110}, m: \m{0\ldots 0} = \pause
+        \\$\qquad$\m{3F00 0000},
+    \item \pause $1.5$ = \pause
+        $+ (1 + 1\cdot2^{-1} ) \cdot 2^0$ =\pause
+        \\$\qquad$
+            sgn: \m{0}, exp: \m{01111111}, m: \m{10\ldots 0} = \pause
+        \\$\qquad$\m{3FC0 0000}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Специальные типы чисел в IEEE 754}
+\screenshotw{12cm}{ieee-754-number-types.png}
 \end{frame}
 
 \end{document}

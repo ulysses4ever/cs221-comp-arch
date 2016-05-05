@@ -4,9 +4,9 @@ handout,%
 
 \input{preamble.tex}
 
-\usepackage{animate}
-
-\title[Цифровая логика: вентили и схемы]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 8. Цифровой логический уровень:\texorpdfstring{\\}{ }вентили и основные логические схемы}
+\title[Уровень набора инструкций]%
+    {Архитектура компьютеров\texorpdfstring{\\}{ }%
+    Лекция 8. Уровень набора инструкций (ISA)}
 
 \begin{document}
 
@@ -14,197 +14,304 @@ handout,%
 \titlepage
 \end{frame}
 
+\section{Введение}
+
 \begin{frame}{Современные многоуровневые машины}
-\screenshotw{6cm}{multi-level-computer.pdf}
-\end{frame}
-
-\begin{frame}
-\frametitle{Содержание}
-\tableofcontents
-\end{frame}
-
-\begin{frame}
-\frametitle{Основные понятия цифрового логического уровня}
-\Large\begin{itemize}
-    \item Транзистор,
-    \item вентиль (gate),
-    \item интегральная схема.
-\end{itemize}
-\end{frame}
-
-\section {Устройство и роль вентилей}
-\begin{frame}
-\frametitle{Использование транзисторов в реализации вентилей}
-\begin{columns}
-    \column{3cm} \pause\screenshotw{3.2cm}{transistor-NOT.png}
-    \column{2.5cm} \pause\screenshotw{3.2cm}{transistor-NAND.png}
-    \column{4.5cm} \pause\screenshotw{4.7cm}{transistor-NOR.png}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Обозначения для основных типов вентилей (ANSI)}
-\screenshotw{7cm}{gates-2.png}
-\pause
-\screenshotw{10cm}{gates-1.png}
-\end{frame}
-
-\begin{frame}[plain]
-\frametitle{Пример реализации функции 3-большинства}
-\pause\begin{columns}
-    \column{3cm} \screenshotw{3cm}{majority-table.png}
-    \column{8cm}\pause \vspace{-.2cm}\screenshotw{8cm}{majority-curcuit.png}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Выбор базисных функций}
-
-\vspace{1cm}\pause
-
-\begin{columns}
-    \column{5cm} Реализация NOT через\\NAND/NOR:\\
-        \screenshotw{4cm}{NOT-via-NAND-NOR.png}
-    \column{6cm} Реализация AND через NAND/NOR:\\
-        \screenshotw{6cm}{AND-via-NAND-NOR.png}
-\end{columns}
-
-\pause\begin{itemize}
-    \item Соображения эффективности ($AB + AC = A(B+C)$);
-    \item предмет схемотехники;
-    \item \link{http://clck.ru/99wJZ}{Википедия: Логические элементы}.
-\end{itemize}
-\end{frame}
-
-\section {Базовые цифровые интегральные схемы}
-
-\begin{frame}
-\frametitle{Типы интегральных схем}
-\screenshotw{6cm}{microchips.jpg}
-\vspace{-.3cm}\pause\begin{itemize}
-    \item Малые  интегральные (SSI, Small Scale Integrated) схемы: 1–10 вентилей,
-    \item средние интегральные (MSI) схемы: 1–100 вентилей,
-    \item большие интегральные (LSI) схемы: 100–100'000 вентилей,
-    \item сверх большие интегральные (VLSI) схемы: > 100'000 вентилей.
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Пример МИС из четырёх вентилей}
-\screenshotw{9cm}{ssi-circuit.png}
-\pause\begin{itemize}
-    \item \small Сколько нужно МИС, чтобы реализовать функцию 3-большинства?
-    \item \small Сколько потребуется контактов для VLSI?
-\end{itemize}
-\end{frame}
-
-\subsection{Корпусирование ИС}
-
-\begin{frame}
-\frametitle{Dual Inline Package, DIP / Quad Flat Package (QFP)}
-Двустороннее / четырёхстороннее расположение выводов
-\begin{columns}
-    \column{6cm} \screenshotw{6cm}{DIP.jpg}
-    \column{5cm} \screenshotw{5cm}{Sega_QFP.jpg}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Pin grid array, PGA}
-Матрица штырьковых выводов
-\begin{columns}
-    \column{6cm} \screenshotw{6cm}{Pentium_4_PGA_Socket.jpg}
-    \column{5cm} \screenshotw{5cm}{PGA_Socket_7.jpg}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Land grid array, LGA}
-Матрица контактных площадок
-\begin{columns}
-    \column{6cm} \screenshotw{6cm}{Pentium_4_Prescott_LGA.jpg}
-    \column{5.5cm} \screenshotw{5.5cm}{LGA_Socket.jpg}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Печатные платы (printed circuit board, PCB)}
-\screenshotw{12cm}{PCB_design_and_realisation.png}
-\end{frame}
-
-\subsection{Комбинационые схемы}
-
-\begin{frame}
-\frametitle{Декодер}
-\begin{itemize}
-    \item $n$ входов, $2^n$ выходов
-    \item пример: 3-декодер\\
-    \vspace{-.1cm} \pause \screenshotw{7cm}{3-decoder.png}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Мультиплексор}
-\begin{itemize}
-    \item $2^n$ входов, $n$ управляющих линий, один выход
-    \item пример: 3-мультиплексор\\
-    \pause \screenshotw{6cm}{3-multiplexer.png}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Мультиплексор/демультиплексор: пример работы}
+%\screenshotw{6cm}{}
 \centering
-\animategraphics[width=10cm,loop,autoplay]{2}{../2015_images/frame-}{0}{4}
+\input{images/multi-level-computer}
 \end{frame}
 
 \begin{frame}
-\frametitle{Пример: функция 3-большинства на основе 3-мультиплексора}
-\screenshotw{5cm}{majority-via-multiplexer.png}
+\frametitle{Место уровня ISA}
+\screenshotw{11cm}{isa-place.png}
 \end{frame}
 
-\begin{frame}
-\frametitle{Компаратор}
+%\begin{frame}
+%\frametitle{Содержание}
+%\tableofcontents[hideallsubsections]
+%\end{frame}
+
+\begin{frame}{Определение}
+
+\pause
+\begin{block}{Википедия (en)}
+Набор инструкций (\textbf{instruction set architecture, ISA}) это часть архитектуры компьютера, \alert{относящаяся к программированию}:
+\begin{columns}
+    \column{6cm}
 \begin{itemize}
-    \item $2n$ входов, один выход
-    \item \pause пример: 4-компаратор\\
-    \screenshotw{6.6cm}{4-comparator.png}
+    \item встроенные (native) типы данных,
+    \item инструкции,
+    \item регистры,
+    \item режимы адресации,
+\end{itemize}
+    \column{6cm}
+\begin{itemize}
+    \item архитектуру памяти,
+    \item механизм обработки прерываний (исключений),
+    \item правила взаимодействия с I/O.
+\end{itemize}
+\end{columns}
+\end{block}
+
+\pause
+\begin{block}{Замечательное наблюдение}
+Первые электронные компьютеры имели простые наборы инструкций~— так же, как и современные (\alert{RISC}).
+\end{block}
+\end{frame}
+
+\section{Набор инструкций MIPS}
+
+\begin{frame}{MIPS: общая характеристика}
+\begin{itemize}[<+->]
+    \item Разработан в Стэнфорде в начале 80-х;
+    \item автор: Джон Хеннесси и др., см. книгу Паттерсона \& Хеннесси;
+    \item коммерциализация: MIPS Technologies (Imagination Technologies);
+    \item рынок: встраиваемые устройства (игровые консоли),
+    в середине-конце 90-х каждый третий проданный RISC-процессор это MIPS-процессор;
+    \item \link{http://stackoverflow.com/q/2635086/465100}{MIPS processors: Are they still in use?} / StackOverflow.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[plain]
-\frametitle{Программируемые логические матрицы}
-\screenshotw{8cm}{pla.png}
+\begin{frame}{\link{https://geektimes.ru/post/273192/}{Baikal-T1} (2015) @ MIPS32 r5 от «Байкал Электроникс»}
+\screenshotw{9.5cm}{baikal-t1.jpg}
 \end{frame}
 
-\subsection{Арифметические схемы}
+\begin{frame}[fragile]{Инструкции и регистры}
 
-\begin{frame}
-\frametitle{Схема сдвига (shifter)}
-\screenshotw{12cm}{shifter.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Сумматоры}
 \begin{columns}
-    \column{5cm}Полусумматор:\\
-    \onslide<2->{\screenshotw{5cm}{half-adder.png}}
-    \column{6cm}Полный сумматор:\\
-    \vspace{-.4cm}\onslide<3->{\screenshotw{5.5cm}{full-adder.png}}
+    \column{6.1cm}
+\pause
+\begin{block}{Группы инструкций}
+\begin{itemize}
+    \item Арифметические,
+    \item логические,
+    \item перемещение данных,
+    \item условные и безусловные переходы.
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{«Адресность» инструкций}
+Пример: \texttt{a = b + c} переводится в
+\begin{verbatim}
+    add a, b, c
+\end{verbatim}
+\end{block}
+
+
+\pause
+    \column{4.5cm}
+%Операнды (часть 1)
+%\screenshotw{5.7cm}{MIPS-operands.png}
+\begin{block}{Регистры (32 штуки)}
+\begin{itemize}[<+->]
+    \item \m{\$s0}, …, \m{\$s7},
+    \item \m{\$t0}, …, \m{\$t9},
+    \item \m{\$a0}, …, \m{\$a3},
+    \item \m{\$v0}, \m{\$v1},
+    \item \m{\$ra},
+    \item \m{\$sp}, \m{\$gp}, \m{\$fp},
+    \item \m{\$zero},
+    \item \m{\$at}.
+\end{itemize}
+\end{block}
 \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Интеллектуальная игра: откомпилируй C в MIPS}
+
+\pause
+\begin{columns}
+    \column{5.5cm}
+\begin{block}{Код на C}
+\begin{verbatim}
+f = (g + h) - (i + j);\end{verbatim}
+\end{block}
+
+    \column{5.5cm}
+\begin{block}{Код на ассемблере MIPS}
+Предполагая, что \texttt{f}, …, \texttt{j} находятся в \texttt{\$s0}, …, \texttt{\$s4}:
+\pause
+\begin{verbatim}
+    add $t0, $s1, $s2
+    add $t1, $s3, $s4
+    sub $s0, $t0, $t1
+\end{verbatim}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Модель памяти}
+\begin{columns}
+    \column{6.5cm}
+\pause
+\begin{itemize}[<+->]
+    \item Память адресуется в байтах.
+    \item Требование по выравниванию (адрес слова кратен 4).
+    \item Составные типы данных размещаются в памяти.
+    \item \emph{Переключаемый порядок} байт
+    (bi-endian).
+    \item Load-Store Architecture.
+\end{itemize}
+\pause
+    \column{5cm}
+\screenshotw{5cm}{MIPS-mem-model.pdf}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]{Режимы адресации (продолжение игры)}
+\begin{columns}
+    \column{5.5cm}
+\begin{block}{Код на C}
+\begin{verbatim}
+    A[12] = h + A[8];\end{verbatim}
+\end{block}
+
+    \column{5.5cm}
+\onslide<3>{%
+\begin{block}{Непосредственные операнды}
+%\begin{verbatim}
+   \texttt{addi \$s2, \$s1, -1}
+%\end{verbatim}
+\end{block}
+}
+\end{columns}
+
+\begin{columns}
+    \column{9cm}
+
+\begin{block}{Код на ассемблере MIPS}
+Предполагаем, что \texttt{h} находится в \texttt{\$s2}, и\\
+адрес начала массива \texttt{A} — в \texttt{\$s3}.
+\pause
+\begin{verbatim}
+    lw  $t0, 32($s3)    # load word
+    add $t0, $s2, $t0
+    sw  $t0, 48($s3)    # store word\end{verbatim}
+\end{block}
+    \column{2cm}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Код инструкций («машинный код»)}
+%\screenshotw{12.3cm}{MIPS-ins-format.png}
+%\begin{columns}
+
+%    \column{6.3cm}
+
+%    \column{5cm}
+%\end{columns}
+%\begin{table}[]
+%\centering
+%\caption{My caption}
+%\label{my-label}
+{\footnotesize\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|cccccc|l}
+\hline
+\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Имя\\ формата\end{tabular}} & \multicolumn{6}{c}{Поля}                                           & Комментарий                          \\ \hline
+                                                                          & 6 бит  & 5 бит & 5 бит & 5 бит       & 5 бит       & 6 бит         & = 32 бита  \\
+R-формат                                                                  & opcode & rs    & rt    & rd          & shamt       & функция       & Арифметика            \\
+I-формат                                                                  & opcode & rs    & rt    & \multicolumn{3}{c|}{адрес/непоср. операнд} & \begin{tabular}[c]{@{}l@{}}Ветвления +\\ непоср.оп.\end{tabular} \\
+J-формат                                                                  & opcode & \multicolumn{5}{c|}{адрес для перехода (jump)}             & Безусловные п. \\ \hline
+\end{tabular}}
+%\end{table}
+
+\pause
+\begin{block}{Коды («номера») регистров}
+\begin{columns}\small
+    \column{4cm}
+\begin{itemize}
+    \item \texttt{\$t0–\$t7} $\mapsto$  8–15;
+\end{itemize}
+    \column{4cm}
+\begin{itemize}
+    \item \texttt{\$s0–\$s7} $\mapsto$ 16–23;
+\end{itemize}
+    \column{4cm}
+\begin{itemize}
+    \item \texttt{\$t8–\$t9} $\mapsto$ 24–25.
+\end{itemize}
+\end{columns}
+\end{block}
+
+
+\pause
+\begin{columns}
+    \column{9.5cm}
+\begin{block}{Пример: \texttt{add \$t0, \$s1, \$s2}}
+\small
+\ttfamily
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+special & \$s1 & \$s2 & \$t0 & 0 & add\\
+\hline
+0 & 17 & 18 & 8 & 0 & 32\\
+\hline
+000000 & 10001 & 10010 & 01000 & 00000 & 100000\\
+\hline
+\end{tabular}
+\end{block}
+    \column{1cm}
+\end{columns}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Переходы}
+
+\begin{columns}
+
+    \column{5.5cm}
+\pause
+\begin{block}{\small Условные (branch)}
+\begin{itemize}\ttfamily\small
+    \item beq rs, rt, L1
+    \item bne rs, rt, L1
+\end{itemize}
+\end{block}
+
+\pause\vspace{-.1cm}
+\begin{block}{\small Сравнения}
+\begin{itemize}\ttfamily\small
+    \item slt rd, rs, rt
+    \item slti rt, rs, constant
+\end{itemize}
+\end{block}
+
+\pause\vspace{-.1cm}
+\begin{block}{\small Безусловные (jump)}
+\begin{itemize}\ttfamily\small
+    \item j L1
+    \item jal ProcedureAddress
+    \item jr \$ra
+\end{itemize}
+\end{block}
+
+    \column{5.5cm}
+\pause
+\begin{block}{Код на C}
+\begin{verbatim}if (i==j) f = g+h;
+else f = g-h;\end{verbatim}
+\end{block}
+
+\pause
+\begin{block}{Код на ассемблере MIPS}
+\begin{verbatim}
+      bne $s3, $s4, Else
+      add $s0, $s1, $s2
+      j   Exit
+Else: sub $s0, $s1, $s2
+Exit: …\end{verbatim}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}[plain]{Режимы адресации MIPS: резюме}
+\vspace{-.1cm}
+\screenshotw{7cm}{MIPS-addressing-modes.png}
 \end{frame}
 
 \end{document}
-
-
-\begin{frame}[plain]
-\frametitle{Одноразрядная секция АЛУ}
-\vspace{-1.0cm}
-\begin{itemize}[<+->]
-    \onslide<4->{\item $n$-разрядные сумматоры}
-    \onslide<5->{\item параллельные сумматоры}
-\end{itemize}
-
-\vspace{-.3cm}\screenshotw{9.2cm}{1-ALU.png}
-\end{frame}

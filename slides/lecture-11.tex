@@ -4,8 +4,8 @@ handout,%
 
 \input{preamble.tex}
 
-\title[Уровень микроархитектуры (1)]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 11. Уровень микроархитектуры:
-микропрограммное управление}
+\title[Уровень микроархитектуры и Mic-1]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 11. Уровень микроархитектуры:
+Mic-1~и~микропрограммное управление}
 
 \begin{document}
 
@@ -13,74 +13,59 @@ handout,%
 \titlepage
 \end{frame}
 
+\section{Введение}
+
 \begin{frame}{Современные многоуровневые машины}
-\screenshotw{6cm}{multi-level-computer.pdf}
+\center
+\input{images/multi-level-computer}
+\end{frame}
+
+\begin{frame}{Набор инструкций IJVM}
+\screenshotw{8.5cm}{ijvm-isa.pdf}
+\end{frame}
+
+\begin{frame}{Компиляция в IJVM}
+\screenshotw{12cm}{ijvm-compile.png}
+\end{frame}
+
+\begin{frame}{Организация центрального процессора}
+  	\screenshotw{7cm}{cpu.pdf}
+\end{frame}
+
+\begin{frame}{Немного об АЛУ}
+  \screenshotw{9cm}{alu.pdf}
+
+\pause
+\begin{itemize}
+  \item Основные \emph{бинарные} функции: сложение, вычитание, AND, OR…
+  \item Основные \emph{унарные} функции: взятие противоположного,
+  \hphantom{Основные \emph{унарные} функции: }отрицание, инкремент, декремент… %
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{Содержание}
-\tableofcontents[hideallsubsections]
+\tableofcontents
 \end{frame}
 
-\section[Mic-1]{Учебная микроархитектура Mic-1}
-\subsection{Арифметико-логическое устройство}
+\section{Тракт данных Mic-1}
 
-\begin{frame}[plain]
-\frametitle{Одноразрядная секция АЛУ}
-\begin{columns}
-
-        \column{3.5cm}\onslide<2>{
-    Номера команд:
-    \begin{itemize}
-        \item 0 — A \textbf{AND} B
-        \item 1 — \textbf{NOT} B
-        \item 2 — A \textbf{OR} B
-        \item 3 — A \textbf{+} B
-    \end{itemize}}
-
-        \column{9cm}
-    \screenshotw{9cm}{1-ALU.png}
-\end{columns}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Полезные сочетания управляющих входов АЛУ}
-\begin{columns}
-
-        \column{3.5cm}
-    Номера команд:
-    \begin{itemize}
-        \item 0 — A \textbf{AND} B
-        \item 1 — \textbf{NOT} B
-        \item 2 — A \textbf{OR} B
-        \item 3 — A \textbf{+} B
-    \end{itemize}
-
-        %\pause
-        \column{9cm}
-    \vspace{-.3cm}\screenshotw{7cm}{alu-table.png}
-\end{columns}
-\end{frame}
-
-\subsection{Тракт данных}
 \begin{frame}[plain]
 \frametitle{Тракт данных Mic-1}
     \vspace{-.2cm}\screenshotw{5.7cm}{datapath.pdf}
 \end{frame}
 
+%~ \begin{frame}
+%~ \frametitle{Синхронизация тракта данных Mic-1}
+%~ \begin{columns}
+        %~ \column{4cm}
+    %~ \screenshotw{3.5cm}{datapath-light.pdf}
 
-\begin{frame}
-\frametitle{Синхронизация тракта данных Mic-1}
-\begin{columns}
-        \column{4cm}
-    \screenshotw{3.5cm}{datapath-light.pdf}
-
-        \column{9cm}
-    \screenshotw{8.7cm}{datapath-timing-crpd-c1.png}
-
-\end{columns}
-\end{frame}
+        %~ \column{9cm}
+    %~ \screenshotw{8.7cm}{datapath-timing-crpd-c1.png}
+%~ \end{columns}
+%~ \end{frame}
 
 \begin{frame}{Связь с оперативной памятью}
 
@@ -91,7 +76,7 @@ handout,%
 
         \column{9cm}
 \onslide<2->{\begin{itemize}
-    \item Регистры для данных:
+    \item Регистры для обработки данных:
         \begin{itemize}\footnotesize
             \item MDR (Memory Data Register) — 32-bit wide,
             \item MAR (Memory Address Register) — word-oriented, 32-bit wide.
@@ -101,7 +86,7 @@ handout,%
 \onslide<3->{\screenshotw{8cm}{MAR-to-bus.png}}
 
 \onslide<4->{\begin{itemize}
-    \item Регистры для инструкций:
+    \item Регистры для обработки инструкций:
         \begin{itemize}\footnotesize
             \item PC (Program Counter) — byte-oriented, 32-bit wide,
             \item MBR (Memory Buffer Register) — 8-bit wide.
@@ -114,12 +99,12 @@ handout,%
 
 \end{frame}
 
-\subsection{Микропрограммное управление}
+\section{Микропрограммное управление Mic-1}
 
 \begin{frame}
 \frametitle{Управляющие (командные) сигналы тракта данных}
 \begin{columns}
-        \column{4cm}
+        \column{3.5cm}
     %\vspace{-.9cm}
     \screenshotw{3.5cm}{datapath-light.pdf}
 
@@ -132,25 +117,44 @@ handout,%
     \item 2 сигнала: запись или чтение слова из памяти;
     \item 1 сигнал: необходимость загрузки (fetch) очередной команды.
 \end{itemize}
-\pause\color{blue}{Сколько всего управляющих сигналов?}\\
-\pause\color{blue}{Можно ли сэкономить?}\\
-\pause \color{red}{А давайте применим декодер!}
+
+\pause\begin{itemize}
+\item Всего управляющих сигналов: \pause 29.
+\pause \item Можно ли сэкономить?
+\pause \item Идея: закодировать номер сигнала загрузки на шину B \pause ⇒ 24 сигнала.
+\end{itemize}
 \end{columns}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Формат микрокоманды (36 бит)}
-\screenshotw{11cm}{microcommand.png}
+\frametitle{Формат микрокоманды}
+\small 24 бита команды + 12 бит переход к следующей = 36 бит — в ПЗУ на ЦП.
+
 \pause
 
+\screenshotw{11cm}{microcommand.png}
+
+\pause
+
+\vspace{-2.5cm}
 Поля \texttt{JAM} и \texttt{NEXT\_ADDRESS} реализуют логику \\
     \alert{управления последовательностью микрокоманд}\\
     (\alert{sequencer}).
+
+\pause
+
+\vspace{.2cm}
+Основные способы определения адреса следующей:
+\begin{enumerate}\itemsep=0cm
+  \item Целиком зашито в поле \texttt{NEXT\_ADDRESS}.
+  \item Целиком берётся из \texttt{MBR}.
+  \item Берётся из \texttt{NEXT\_ADDRESS}, но учитывает флаги АЛУ.
+\end{enumerate}
 \end{frame}
 
 \begin{frame}
-\frametitle{Определение адреса следующей микрокоманды}
+\frametitle{Определение адреса следующей микрокоманды (\m{MPC})}
 
     Пример
     \screenshotw{12cm}{jamz.png}
@@ -167,7 +171,13 @@ handout,%
         | \color{gray}{NEXT\_ADDRESS[8]}}
 \end{frame}
 
-\subsection{Микроассемблер для Mic-1}
+\begin{frame}[plain]
+\frametitle{Микроархитектура Mic-1}
+\vspace{-.3cm}
+\screenshotw{8.5cm}{Mic-1.png}
+\end{frame}
+
+\section{Микроассемблер для Mic-1 и реализация IJVM}
 
 \begin{frame}{Микроассемблер MAC}
     \alert{Как удобно записывать микрокоманды?}\\
@@ -203,57 +213,20 @@ handout,%
 \end{columns}
 \end{frame}
 
-\begin{frame}[plain]
-\frametitle{Микроархитектура Mic-1}
-\vspace{-.3cm}
-\screenshotw{8.5cm}{Mic-1.png}
-\end{frame}
-
-\section[IJVM]{Набор инструкций IJVM и его реализация на Mic-1}
-
-\begin{frame}{Стековые машины}
-
-    \pause
-    %\begin{block}{%
-    Стек кадров подпрограмм:
-    %}
-    \screenshotw{11cm}{stacks.png}
-    %\end{block}
-    \pause
-
-    %\begin{block}{
-    Стек операндов, пример: a1 = a2 + a3:
-    %}
-    \pause\screenshotw{11cm}{operand-stack.png}
-    %\end{block}
-
-    \pause
-    \vspace{-.2cm}{\small Стековые машины vs. регистровые машины.}
-\end{frame}
-
-%\begin{frame}{Модель памяти IJVM}
-%    \screenshotw{11cm}{ijvm-memory-model.png}
-%\end{frame}
-
-%\begin{frame}{Набор инструкций IJVM}
-%\screenshotw{8.5cm}{ijvm-is.png}
-%\end{frame}
-
-\begin{frame}{Компиляция в IJVM}
-\screenshotw{11cm}{ijvm-compile.png}
-\end{frame}
 
 \begin{frame}{Примеры микропрограммных реализаций инструкций}
     \ttfamily\small
 
 \pause
-    Main1: PC = PC + 1; fetch; goto (MBR)
+«Основной цикл»:\\
+\m{Main1: PC = PC + 1; fetch; goto (MBR)}
 
 \begin{columns}
         \column{5.5cm}
 
     \pause
     \begin{block}{\texttt{IADD (0x60)}}
+    \pause
     \begin{enumerate}
         \item MAR = SP = SP — 1; rd
         \item H = TOS
@@ -276,17 +249,17 @@ handout,%
 \end{columns}
 \end{frame}
 
-\begin{frame}{О наборе инструкций IJVM и \link{http://mmcs.sfedu.ru/~ulysses/Edu/CS221/mic1ijvm-mmcs.mal}{его реализации на Mic-1}}
+%~ \begin{frame}{О наборе инструкций IJVM и \link{http://mmcs.sfedu.ru/~ulysses/Edu/CS221/mic1ijvm-mmcs.mal}{его реализации на Mic-1}}
 
-\begin{columns}
-        \column{4cm}
-    \screenshotw{3.5cm}{datapath-light.pdf}
+%~ \begin{columns}
+        %~ \column{4cm}
+    %~ \screenshotw{3.5cm}{datapath-light.pdf}
 
-        \column{9cm}
-\screenshotw{8.5cm}{ijvm-is.png}
+        %~ \column{9cm}
+%~ \screenshotw{8.5cm}{ijvm-is.png}
 
-\end{columns}
-\end{frame}
+%~ \end{columns}
+%~ \end{frame}
 
 \end{document}
 

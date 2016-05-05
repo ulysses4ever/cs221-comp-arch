@@ -56,6 +56,16 @@
 \end{frame}
 
 \begin{frame}
+\frametitle{Технология магнитной записи}
+\screenshotw{12cm}{hdd-head.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Сектора и дорожки}
+    \screenshotw{9cm}{hdd-tracks.pdf}
+\end{frame}
+
+\begin{frame}
 \frametitle{Фрагмент дорожки жёсткого диска}
 \screenshotw{12cm}{hdd-track.png}
 \end{frame}
@@ -88,6 +98,10 @@
     \item кэширование;
     \item учёт повреждённых секторов.
 \end{itemize}
+\end{frame}
+
+\begin{frame}{SSD — «убийца» HDD?}
+\screenshotw{11cm}{ssd-img.jpg}
 \end{frame}
 
 \section[Интерфейсы вторичной памяти и некоторых I/O-устройств]{Интерфейсы вторичной памяти и некоторых устройств ввода-вывода}
@@ -150,7 +164,7 @@ aka ATA (AT Attachment, AT = Advanced Technology от IBM PC AT)
 \begin{itemize}%[<+->]
     \onslide<1->\item Сообщения длины $k$ и кодовые слова длины $n$, $n > k$;
 
-    \onslide<2->\item метрика Хэмминга, минимальное кодовое расстояние $d$;
+    \onslide<2->\item метрика Хэмминга;
 
     \onslide<4->\item простейший код, контролирующий ошибки:
     \begin{itemize}
@@ -180,10 +194,10 @@ aka ATA (AT Attachment, AT = Advanced Technology от IBM PC AT)
 \screenshotw{3cm}{Hamming_distance-example.pdf}
 
     \column{5.9cm}
-Код проверки чётности ($d=2$):
+Код проверки чётности:
 \screenshotw{3cm}{Parity-check-geometry.pdf}
 
-Код троекратного повторения ($d=3$):
+Код троекратного повторения:
 \screenshotw{3cm}{Repetition-3-code-geometry.pdf}
 \end{columns}
 

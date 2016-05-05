@@ -3,7 +3,7 @@
 
 \input{preamble.tex}
 
-\title[Коды Хэмминга. Подсистема I/O (2)]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 7. Коды Хэмминга.\texorpdfstring{\\}{ }Подсистема ввода-вывода (окончание)}
+\title[Коды Хэмминга. Подсистема I/O]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 7. Коды Хэмминга.\texorpdfstring{\\}{ }Подсистема ввода-вывода}
 
 \begin{document}
 
@@ -13,117 +13,205 @@
 
 \section{Коды Хэмминга}[fragile]
 
-\begin{frame}{Коды Хэмминга, $d=3$}
+\begin{frame}{Минимальное кодовое расстояние $d$,
+(количество~исправляемых ошибок $t$)}
+
+\begin{columns}
+    \column{5.5cm}
+\begin{block}{Код 3-кратного повторения: $k=1$, $n=3$\onslide<3->{\pause, $d=3$}}
+%\onslide<1->{
+\screenshotw{3cm}{Repetition-3-code-geometry.pdf}
+%}
+\end{block}
+
+    \column{5.5cm}
+\onslide<4->{
+\begin{block}{Код проверки чётности: $k=2$, $n=3$\onslide<5->{, $d=2$}}
+\screenshotw{3cm}{Parity-check-geometry.pdf}
+\end{block}
+}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Коды Хэмминга}
 \begin{itemize}[<+->]
 
-    \item Идея: добавить ряд битов проверки чётности, по корректности
-        которых после передачи установить позицию ошибки (if any)
+    \item \textbf{Идея:} добавить ряд битов проверки чётности, по
+        корректности
+        которых после передачи установить позицию ошибки (if any).
 
     \item
-            $(7, 4)$-код Хэмминга ($n = 7$, $k = 4$):
+            $(7, 4, 3)$-код Хэмминга ($n = 7$, $k = 4$, $d=3$):
 
-\only<1-6>{\screenshotw{3cm}{Hamming_7_4.pdf}}
-\only<7>{%
-            \vspace{.5cm}
-
-\begin{tabular}{cp{6cm}}
-{\scriptsize
-\begin{tabular}{rcccccccc}
-   & p1 & p2 & d1 & p4 & d2 & d3 & d4 \\
-p1 & x  &    & x  &    & x  &    & x \\
-p2 &    & x  & x  &    &    & x  & x \\
-p4 &    &    &    & x  & x  & x  & x \\
-\end{tabular}}
-&
-            %\[
-            $
-            \mathbf{H} := \begin{pmatrix}
-1 & 0 & 1 & 0 & 1 & 0 & 1\\
-0 & 1 & 1 & 0 & 0 & 1 & 1\\
-0 & 0 & 0 & 1 & 1 & 1 & 1
-            \end{pmatrix}
-            %\]%
-            $
-\end{tabular}
-
-            \vspace{.625cm}
-}
+            \screenshotw{3cm}{Hamming_7_4.pdf}
 
     \item $(2^r - 1, 2^r - r - 1)$-код Хэмминга: \\
     \begin{itemize}
         \item позиции кодового слова нумеруются с 1;
 
         \item инфо-биты вписываются подряд в позиции
-            кодового слова, пропуская позиции $2^i$, $0 \leqslant i < r$;
+            кодового слова, пропуская позиции $2^{i-1}$, $1 \leqslant i \leqslant r$;
 
-        \item $i$-й бит проверки чётности вписывается на $2^i$-ю
+        \item $i$-й бит проверки чётности ($1 \leqslant i \leqslant r$)
+            вписывается на $2^{i-1}$-ю
             позицию кодового слова и контролирует чётность инфо-битов
             в позициях, номер которых содержит $i$-ый бит равный 1.
     \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{$(15,11)$-код Хэмминга}
-\screenshotw{11cm}{Hamming_15_11.png}
+\begin{frame}{Формулы для $(7,4)$-кода Хэмминга (часть 1)}
 
-\pause
-Проверочная матрица $(15,11)$-кода Хэмминга:
+\begin{block}{Структура кодового слова $c$}
+Пусть исходное сообщение обозначается $d=(d_1, d_2, d_3, d_4)$, а биты проверки чётности — $p_i$, тогда:
 \[
-\left( \begin{array}{ccccccccccccccc}
-1 & 0 & 1 & 0 & 1 & 0 &1 & 0 &1 & 0 &1 & 0 &1 & 0 &1 \\
-0 & 1 & 1 & 0 &0 & 1 & 1 & 0 &0 & 1 & 1 & 0 &0 & 1 & 1\\
-0 & 0 & 0 & 1 &1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 &1 & 1 & 1\\
-0 & 0 & 0 & 0 &0 & 0 & 0 & 1 &1 & 1 & 1 & 1 &1 & 1 & 1
-\end{array} \right)
+    c = (p_1, p_2, d_1, p_3, d_2, d_3, d_4).
 \]
+\end{block}
+
+\begin{block}{Формулы для $p_i$ через $c_i$}
+\begin{enumerate}
+    \item $p_1 = c_3 + c_5 + c_7$,
+        потому что $3 = 1 \color{red} 1$, \ $5 = 1 0 \color{red} 1$,
+            $7 = 1 1 \color{red} 1$;
+    \item $p_2 = c_3 + c_6 + c_7 $,
+        потому что $3 = \textcolor{red}{1} 1$, \ $6 = 1\textcolor{red}{1}0$,
+            $7 = 1\textcolor{red}{1}1$;
+    \item $p_3 = c_5 + c_6 + c_7 $,
+        потому что $5 = \textcolor{red}{1} 01$, $6 = \textcolor{red}{1}10$,
+            $7 = \textcolor{red}{1}11$.
+\end{enumerate}
+\end{block}
 \end{frame}
 
-\section{Ввод-вывод и системные шины}
+\begin{frame}{Формулы для $(7,4)$-кода Хэмминга (часть 2)}
+
+\begin{block}{Формулы для $p_i$ через $d_i$}
+В приведённых формулах для $p_i$ можно заменить $c_i$ на биты исходного сообщения $d_i$, используя указанную выше структуру кодового слова $c$:
+\begin{enumerate}
+    \item $p_1 = d_1 + d_2 + d_4$,
+    \item $p_2 = d_1 + d_3 + d_4$,
+    \item $p_3 = d_2 + d_3 + d_4$.
+\end{enumerate}
+\end{block}
+
+\begin{block}{Итоговая формула для кодового слова}
+\[
+    c = (
+        \textcolor{green}{d_1 + d_2 + d_4},
+        \textcolor{blue}{d_1 + d_3 + d_4},
+        d_1,
+        \textcolor{magenta}{d_2 + d_3 + d_4},
+        d_2,
+        d_3,
+        d_4).
+\]
+
+\textbf{Замечание:} вектор $c$ получен из вектора $d$ как результат \emph{линейного преобразования}.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Проверочная матрица $(7,4)$-кода Хэмминга}
+\small
+\begin{block}{Крестики превращаются в единички}
+Составим таблицу: какие биты проверки чётности отвечают за какие биты кодового слова. На основе этой таблицы запишем \emph{проверочную матрицу} $\mathbf{H}$.
+
+%\begin{table}
+\begin{tabular}{cp{6cm}}
+%{\scriptsize
+    \begin{tabular}{r|cccccccc}
+    \toprule
+       & $p_1$ & $p_2$ & $d_1$ & $p_3$ & $d_2$ & $d_3$ & $d_4$ \\
+    \midrule
+    $p_1$ & x  &    & x  &    & x  &    & x \\
+    $p_2$ &    & x  & x  &    &    & x  & x \\
+    $p_3$ &    &    &    & x  & x  & x  & x \\
+    \bottomrule
+    \end{tabular}
+&
+    %\[
+    $
+        \mathbf{H} := \begin{pmatrix}
+            1 & 0 & 1 & 0 & 1 & 0 & 1\\
+            0 & 1 & 1 & 0 & 0 & 1 & 1\\
+            0 & 0 & 0 & 1 & 1 & 1 & 1
+        \end{pmatrix}
+    %\]
+    $
+\end{tabular}%}
+%\end{table}
+\end{block}
+
+\begin{block}{Основное свойство проверочной матрицы}
+Пусть $v$ — принятое по каналу слово,  которое отличается от кодового слова $c$ $(7,4)$-кода Хэмминга не более, чем в одной позиции, тогда вектор (он называется \emph{синдромом})
+\[
+    s = \mathbf{H}v
+\]
+даёт двоичную запись номера этой позиции. \color{red}{Если $s=0$, то $v=c$}.
+\end{block}
+
+\end{frame}
+
+\section{Ввод-вывод}
 
 \begin{frame}
 \frametitle{Логическая организация I/O}
 \screenshotw{10cm}{pc-logic-structure.png}
+\pause
+\begin{block}{Роль контроллера}
+\begin{itemize}
+    \item \textit{для устройства}: тайминг, контроль;
+    \item \textit{для процессора}: декодирование команд, пересылка данных, отчёт о статусе, распознавание адреса, буферизация, контроль ошибок.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Логическая структура контроллера}
+\screenshotw{12cm}{controller-structure.pdf}
+\end{frame}
+
+\begin{frame}{Стили взаимодействия с I/O}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{>{\raggedright}p{2cm}|cc}
+                       & Без прерываний & С прерываниями  \\ \hline
+C участием процессора & Программируемый I/0 & I/O на основе П. \\
+Без участия процессора & & Прямой доступ в память\\
+\end{tabular}
+% (DMA, Direct Memory Access)
+\end{center}
+\end{frame}
+
+\begin{frame}[plain]{I/O с точки зрения процессора (чтение, 3 стиля)}
+\vspace{-.2cm}
+\screenshotw{11.5cm}{io-styles.pdf}
+\end{frame}
+
+\begin{frame}{I/O с точки зрения программиста}
 
 \pause
+\begin{itemize}[<+->]\itemsep=.7cm
+    \item Доступ через «порты» (Port-Mapped I/O)\\Пример: инструкции \texttt{IN}/\texttt{OUT} в x86.
 
-\begin{columns}
-    \column{6cm}
-\begin{itemize}[<+->]
-    \item «Программируемый I/O» или Port-Mapped I/O (пример: инструкции \texttt{IN}/\texttt{OUT} в x86);
-    \item Memory Mapped I/O (MMIO);
-    \item Direct Memory Access (DMA);
-\end{itemize}
+    \item Через память (Memory Mapped I/O, MMIO)\\
+    Пример: «обычный» \texttt{MOV}.
 
-    \column{6.5cm}
-\begin{itemize}[<+->]
-    \item прерывания: программные (пример: \texttt{INT} в x86) и аппаратные; исключения;
-    \item арбитр шины и «кража циклов».
-\end{itemize}
-\end{columns}
-
-\begin{itemize}[<+->]
-    \item Роль контроллера;
-    \item «программируемый I/O» или Port-Mapped I/O (пример: инструкции \texttt{IN}/\texttt{OUT} в x86);
-    \item Memory Mapped I/O (MMIO);
-    \item Direct Memory Access (DMA);
-    \item прерывания: программные (пример: \texttt{INT} в x86) и аппаратные; исключения;
-    \item арбитр шины и «кража циклов».
+    \item Программные прерывания\\
+    Пример: \texttt{INT} в x86. \\ \pause (Другие типы прерываний: аппаратные, исключения.)
 \end{itemize}
 \end{frame}
 
+\section{Системные шины}
+
 \begin{frame}
 \frametitle{Эволюция шин на ПК}
-\begin{itemize}
+\begin{itemize}\itemsep=.6cm
     \item ISA (Industry Standard Architecture) @ IBM PC, 1981;
     \item EISA для 32-разрядных IBM-совместимых компьютеров, 1988;
     \item PCI, 1992;
     \item PCIe (Express), 2004.
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Peripheral Component Interconnect (Conventional PCI)}
-\screenshotw{8cm}{pci-slots.jpg}
 \end{frame}
 
 \begin{frame}
@@ -133,7 +221,19 @@ p4 &    &    &    & x  & x  & x  & x \\
 
 \begin{frame}
 \frametitle{Звёздная топология PCIe}
-\screenshotw{10cm}{PCIe-sample-arch.pdf}
+\screenshotw{11cm}{pcie-topology.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Дорожки (lane) PCIe}
+\screenshotw{9cm}{pcie-lane.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Слоты PCIe и PCI}
+\screenshotw{9cm}{pcie-slots.jpg}
+
+•~PCIe~×4, \hfill •~PCIe~×16, \hfill •~PCIe~×1, \hfill •~PCIe~×16, \hfill •~PCI~(32-bit)
 \end{frame}
 
 \begin{frame}
@@ -148,6 +248,8 @@ p4 &    &    &    & x  & x  & x  & x \\
 \end{columns}
 \end{frame}
 
+\end{document}
+
 \section{Организация некоторых перифирийных устройств}
 
 \begin{frame}
@@ -159,5 +261,3 @@ p4 &    &    &    & x  & x  & x  & x \\
 \frametitle{Устройство лазерного принтера}
 \screenshotw{9cm}{laser-printer.png}
 \end{frame}
-
-\end{document}

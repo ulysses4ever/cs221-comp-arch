@@ -13,18 +13,20 @@
 
 \begin{frame}
 \frametitle{Содержание}
-\tableofcontents[hideallsubsections]
+\tableofcontents
 \end{frame}
 
-\section {Организация оперативной памяти}
+\section {Логическая организация оперативной памяти}
+
+\subsection {Биты и байты}
 
 \begin{frame}
 \frametitle{Биты}
-\pause{\begin{itemize}[<+->]
+\pause{\begin{itemize}[<+->]\itemsep=.5cm
     \item Почему двоичная система?
     \item Двоично-десятичный код (binary-coded decimals, BCD).
-    \item Воображаемый пример: десяти-разрядные запоминающие устройства.
-    \item Квантовые биты: двумерное комплексное линейное пространство состояний вместо двух состояний.
+    \item Воображаемый пример: 10-разрядные запоминающие устройства.
+    \item Квантовые биты \pause (двумерное комплексное линейное пространство состояний вместо двух состояний).
 \end{itemize}}
 \end{frame}
 
@@ -63,13 +65,13 @@
 \end{itemize}}
 \end{frame}
 
-\section {Порядок байт}
+\subsection {Байты и слова: порядок байт}
 
 \begin{frame}
 \frametitle{Порядок байт в слове (Endianness)}
 
 \begin{itemize}[<+->]
-    \item Память байт-ориентирована, процессор слово-ориентирован.
+    \item Память байт-ориентирована, процессор словно-ориентирован.
     \item Как представлено число 1 в оперативной памяти\\
            32-разрядной машины?
 \end{itemize}
@@ -105,8 +107,8 @@
 \pause\small
 \begin{block}{История}
 \begin{itemize}
-    \item Danny Cohen (1980-04-01): “On Holy Wars and a Plea for Peace”
-    \item NUXI problem
+    \item Danny Cohen (1980-04-01): “On Holy Wars and a Plea for Peace”.
+    \item NUXI problem.
 \end{itemize}
 \end{block}
 
@@ -115,19 +117,29 @@
 
 \begin{frame}{Пример: 0A0B0C0D$_{\text{h}}$}
 \begin{columns}
-    \column{10.5cm}
+    \column{11.5cm}
 \begin{itemize}\itemsep=10pt
-    \item 8-битный байт, прямой (big) порядок:\hfill |0A|0B|0C|0D|;
-    \item 8-битный байт, обратный (little) порядок:\hfill |0D|0C|0B|0A|;
-    \item 16-битный байт, прямой (big) порядок:\hfill |0A0B|0C0D|;
-    \item 16-битный байт, обратный (little) порядок:\hfill |0C0D|0A0B|.
+    \item 8-битный байт, прямой (big) порядок: \pause\hfill \texttt{|0A|0B|0C|0D|};
+    \pause\item 8-битный байт, обратный (little) порядок:\pause\hfill \texttt{|0D|0C|0B|0A|};
+    \pause\item 16-битный байт, прямой (big) порядок:\pause\hfill \texttt{|0A0B|0C0D|};
+    \pause\item 16-битный байт, обратный (little) порядок:\pause\hfill \texttt{|0C0D|0A0B|}.
 \end{itemize}
     \column{0cm}
 \end{columns}
 \end{frame}
 
+\begin{frame}{Какой порядок выбрать?}
+\pause
+\begin{itemize}[<+->]\itemsep=.5cm
+    \item Прямой порядок привычней для человека;
+    \item обратный порядок упрощает адресацию;
+    \item обратный порядок упрощает реализацию арифметики\\
+         в простых машинах.
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Примеры реализации}
-\begin{itemize}[<+->]
+\begin{itemize}[<+->]\itemsep=.5cm
     \item Прямой порядок (aka \emph{big-endian order} aka \emph{network order}):\\
     IBM System 360/370/.../z, Motorolla 68000, Atmel AVR32;
 
@@ -140,16 +152,6 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Какой порядок выбрать?}
-\pause
-\begin{itemize}\itemsep=10pt
-    \item Прямой порядок привычней для человека;
-    \item обратный порядок упрощает адресацию;
-    \item обратный порядок упрощает реализацию арифметики\\
-         в простых машинах.
-\end{itemize}
-\end{frame}
-
 \section {Сверхоперативная память: кэш-память}
 
 \begin{frame}{Устройство и основные идеи}
@@ -157,47 +159,42 @@
 \pause{\begin{itemize}[<+->]
     \item \link%
     {http://en.wikipedia.org/wiki/Von_Neumann_architecture\#Von_Neumann_bottleneck}%
-    {Wikipedia: Von Neumann bottleneck};
-    \item принцип локальности;
-    \item кэш-линейки (cache lines);
+    {W: Von Neumann bottleneck} и закон Мура;
+    \item принцип локальности (locality of reference);
+    \item кэш-линейки (lines) и кэш-записи (entries);
     \item формула: если $c$~— среднее время доступа к кэш-памяти,
            \\$m$~— к основной памяти, а $h$~— доля кэш-промахов, то:
 
     \begin{center}
-    среднее время доступа к данным = \onslide<6->{$c + h \cdot m$}
+    среднее время доступа к данным = \onslide<6->{$c + h \cdot m$}.
     \end{center}
-
-    \item<7-> split cache.
 \end{itemize}}
 \end{frame}
 
 \begin{frame}{Вопросы проектирования кэш-памяти}
-\begin{enumerate}
-    \item Размер кэш-памяти.
-    \item Размер кэш-линеек.
-    \item Использование сплит-кэша.
-    \item Организация: алгоритм сброса и адресация.
-    \item Уровни кэш-памяти.
+\begin{enumerate}[<+->]\itemsep=.5cm
+    \item Алгоритмы (политики) замещения (LRU, LFU, etc.).
+    \item Политики обратной записи (сквозная, отложенная).
+%    \item Простои процессора (спекулятивное исполнение, HyperThreading).
+    \item Формат кэш-записи:
+    \begin{tabular}{|c|c|c|}
+    \hline
+    тег & данные & флаги\\
+    \hline
+    \end{tabular}.
+    \item Ассоциативность
+    \begin{itemize}
+        \item полная ассоциативность,
+        \item прямое отображение,
+        \item 2-канальный множественно-ассоциативный случай.
+    \end{itemize}
 \end{enumerate}
+\end{frame}
+
+\begin{frame}{Пример: ядро K8 в процессоре AMD Athlon 64}
+\screenshotw{11cm}{cache-athlon.pdf}
 \end{frame}
 
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  КОНЕЦ  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Пути преодоления Von Neumann bottleneck}
-\begin{columns}
-    \column{7cm}
-\screenshotw{7cm}{pipeline-4.pdf}
-    \column{6cm}
-\begin{enumerate}
-    \item Кэш-память.
-    \item Сплит-кэш.
-    \item Прогнозирование ветвлений\\
-        (\link{http://en.wikipedia.org/wiki/Branch_predictor}%
-        {branch prediction}).
-    \item Память-черновик\\(scratchpad memory).
-
-\end{enumerate}
-\end{columns}
-\end{frame}

@@ -4,8 +4,7 @@ handout,%
 
 \input{preamble.tex}
 
-\title[Компьютерные шины]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 10. Цифровой логический уровень:\texorpdfstring{\\}{ }компьютерные шины}
-
+\title[Другие примеры наборов инструкций]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 10. Другие примеры наборов инструкций}
 
 \begin{document}
 
@@ -18,268 +17,202 @@ handout,%
 \tableofcontents
 \end{frame}
 
-%\screenshotw{3.2cm}{transistor-NOT.png}
+\section{Развитие архитектуры x86}
 
-\section{Вопросы организации шин}
-
-\begin{frame}
-\frametitle{«Системная шина»}
-\screenshotw{9cm}{system-bus-ru.png}
-
-\pause Внутренние и внешние шины
-\end{frame}
-
-\begin{frame}[plain]
-\frametitle{Разнообразие шин}
-\screenshotw{11cm}{h87.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Цоколёвка (pinout) процессора}
-\screenshotw{11cm}{cpu-pinout.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Способы подсоединения к шине}
-\begin{block}{Задающие (master) и подчинённые (slave)}
-\footnotesize
-%\screenshotw{9cm}{master-slave.png}
-\begin{table}[h]
-\begin{tabular}{@{}lll@{}}
-\toprule
-\multicolumn{1}{c}{\textbf{Задающее устройство}} & \multicolumn{1}{c}{\textbf{Подчинённое устройство}} & \multicolumn{1}{c}{\textbf{Пример запроса}} \\ \midrule
-Центральный процессор                            & Память                                              & Чтение очередной команды         \\
-Центральный процессор                            & Устройство ввода-вывода                             & Запрос на передачу данных                   \\
-Центральный процессор                            & Сопроцессор                                         & Передача команды                            \\
-Устройство ввода-вывода                          & Память                                              & Прямой доступ в память                \\
-Сопроцессор                                      & Центральный процессор                               & Доступ к операндам из ЦП                    \\ \bottomrule
-\end{tabular}
-\end{table}
-
-%\vspace{-.3cm}
-\end{block}
+\begin{frame}{Развитие архитектуры x86}
 
 \pause
-\begin{block}{Технические аспекты}
+\begin{itemize}[<+->]\itemsep=.3cm
+      \item 16-разрядные x86-процессоры:\\ Intel 8086 (1978 г.), 8088, 80186, 80286 (1982 г.)
+
+      \item 32-разрядные x86-процессоры:
+      \begin{itemize}
+        \item Intel 80386 (1985 г.), 80486,
+        \item семейство Pentium  (до середины 2000-х),
+        \item Intel Core (2006 г);
+        \item AMD K5, K6, K7 (Athlon)…
+      \end{itemize}
+
+      \item 64-разрядные архитектуры и процессоры:
+      \begin{itemize}
+          \item Intel Architecture 64 aka IA-64 и процессор Itanium (2001~г.)
+          \item AMD64 aka x86-64: AMD Opteron (2003 г.),
+          \item Pentium 4 и Xeon с 2004 г., Intel Core 2 (2006 г.), Intel Core i3/i5/i7.
+      \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Преимущества 64-х разрядов}
+\pause
+    \begin{itemize}\itemsep=.5cm
+        \item Cложнее получить переполнение.
+
+        \item Увеличение производительности программ уже использующих 64-разрядные целые и вещественные числа.
+
+        \item Б\emph{о}льшее адресное пространство.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Регистры в архитектуре x86-64: общая картина}
+\begin{columns}
+    \column{7cm}\vspace{-.7cm}\screenshotw{7.3cm}{x86-64-registers.png}
+    \column{5cm}
+\pause\small\begin{itemize}[<+->]
+    \item x87~— старая реализация IEEE~754
+    \item MMX~— SIMD-инструкции, 64-битные регистры,\\целые операнды:\\
+        $1\times64$, $2\times32$, $4\times16$, $8\times8$,
+    \item SSE~— SIMD-инструкции, 128-битные регистры, вещественные операнды:\\
+        $4\times32$
+    \item SSE2~— SIMD-инструкции, 128-битные регистры,
+        вещественные или целые операнды:\\
+        $2\times64$, $4\times32$, $8\times16$, $16\times8$,
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Имена регистров x86 (1): GPE, x87/MMX, special}
+\screenshotw{12cm}{x86-registers-1.pdf}
+\end{frame}
+
+\begin{frame}{Имена регистров x86 (2): SSE, AVX}
+\screenshotw{11.7cm}{x86-registers-2.pdf}
+\end{frame}
+
+\subsection{Адресация в архитектуре x86}
+
+\begin{frame}{8086, 8088 (pre-80286)}
+
+\pause
+\begin{columns}
+  \column{5.5cm}
 \begin{itemize}[<+->]
-    \item Драйвер, приёмник и трансивер шины.
-    \item tri-state устройства vs. открытый коллектор («монтажное ИЛИ», wired OR).
-\end{itemize}
-\end{block}
-\end{frame}
+    \item Сегментные регистры:\\
+    \m{DS}, \m{CS}, \m{SS} и \m{ES}.
 
-\begin{frame}
-\frametitle{Основные характеристики шины}
-\pause
-\begin{block}{Ширина}\pause
-\begin{itemize}[<+->]
-    \item Parallel vs. serial,
-    \item перекос шины,
-    \item временн\'{о}е мультиплексирование.
-\end{itemize}
-\end{block}
-
-\begin{columns}
-    \column{5cm}
-    \pause
-
-    \begin{block}{Синхронизация}
+    \item Когда я пишу
     \begin{itemize}
-        \item Синхронные,
-        \item асинхронные,
-        \item изохронные шины.
-    \end{itemize}
-    \end{block}
+      \item \m{MOV AX, (BX)} — подразумеваю \m{MOV~AX,~(DS:BX)},\\
+    %\hphantom{Когда я пишу }
+      \item \m{CALL AX} — подразумеваю \m{CALL~CS:AX},
 
-    \column{5cm}
+      \item \m{MOV AX, 4(BP)} — подразумеваю \m{MOV~AX,~4(SS:BP)},
+    \end{itemize}
+
+    \item 20-битная адресная шина,
+        {\small(сегмент\textsubscript{16} <\hspace{0cm}< 4) + смещение\textsubscript{16}}
+
+    \item логический, линейный и физический адреса.
+\end{itemize}
+
+  \column{6.5cm}
     \pause
-
-    \begin{block}{Арбитраж}
-    \begin{itemize}
-        \item Централизованный,
-        \item децентрализованный.
-    \end{itemize}
-    \end{block}
-
+    \vspace{-.3cm}
+    \screenshotw{6.3cm}{x86-addressing-real.pdf}
 \end{columns}
 \end{frame}
 
-\begin{block}{Проблемы эволюции шин}
-\screenshotw{10cm}{addresses-evolution-x86.png}
-\end{block}
-
-\subsection{Синхронизация шины}
-
-\begin{frame}
-\frametitle{Чтение на синхронной шине}
-\screenshotw{11cm}{sync-bus-transfer.png}
+\begin{frame}{80286: 24-битная адресная шина}
+\pause{}MMU: Memory Management Unit, <<защищённый~режим>>
+\screenshotw{10cm}{x86-addressing-protected-2.pdf}
 \end{frame}
 
-\begin{frame}
-\frametitle{Чтение на асинхронной шине}
-\screenshotw{8.5cm}{async-bus-transfer.png}
 
-\pause
-\small\begin{block}{Полное квитирование (full handshaking)}
-\vspace{-.2cm}
-\begin{enumerate}
-  \setlength{\itemsep}{3pt}
-  \setlength{\parskip}{0pt}
-  \setlength{\parsep}{0pt}
-    \item Установка MSYN.
-    \item Установка SSYN.
-    \item Сброс MSYN в ответ на установку SSYN.
-    \item Сброс SSYN в ответ на сброс MSYN.
-\end{enumerate}
-\end{block}
-\end{frame}
+\begin{frame}{80286: получение по логическому адресу линейного (физического)}
 
-\subsection{Арбитраж шины}
+    \pause
+    \begin{itemize}[<+->]\itemsep=.5cm
+        \item \{селектор дескриптора\}\textsubscript{16} $\leftarrow$
+            сегментный регистр,
 
-\begin{frame}
-\frametitle{Централизованный арбитраж}
-\screenshotw{11cm}{centr-arbitration.png}
-\pause
-\screenshotw{11cm}{centr-arbitration-levels.png}
-\end{frame}
+        \item \{дескриптор сегмента\}\textsubscript{64} $\leftarrow$
+            селектор дескриптора,
 
-\subsection{Разные типы циклов работы шины}
+        \item сегмент\textsubscript{24} $\leftarrow$ дескриптор сегмента,
 
-\begin{frame}
-\frametitle{Блочное чтение}
-\screenshotw{11cm}{block-read-on-bus.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Контроллер прерываний}
-\screenshotw{12cm}{interrupt-controller.png}
-\end{frame}
-
-\section{Примеры шин}
-
-\subsection{DDR}
-\begin{frame}
-\frametitle{Конвейерная работа с памятью DDR}
-\begin{itemize}
-    \item Матричная организация памяти: row x col.
-    \pause\item Независимые «ранги» памяти (чипы, до 8 шт.) и «банки» (внутри одного чипа).
-    \pause\item Основные команды для банка памяти:
-    \begin{itemize}
-        \item ACTIVATE — «открывает» $i$-ую строку;
-        \item READ / WRITE — читает / пишет в $j$-й столбец;
-        \item PRECHARGE — «закрывает» текущую открытую строку.
+        \item \{линейный адрес\}\textsubscript{24} $\leftarrow$
+            сегмент + смещение\textsubscript{16}.
     \end{itemize}
+\end{frame}
+
+\begin{frame}{80386 (x86-32): 32-битная адресная шина, «виртуальная~память»}
+ \pause
+    \screenshotw{10cm}{i386-address-translation.png}
+
+\end{frame}
+
+\begin{frame}{80386 (x86-32): получение физического адреса}
+ \pause
+    \screenshotw{10.3cm}{x86-paging-2.pdf}
+\end{frame}
+
+\begin{frame}{Преодоление 4Gb-предела}
+\begin{itemize}\itemsep=1cm
+%\setcounter{enumi}{3}
+    \item Pentium Pro (1995 г.): 36-битная адресная шина,\\
+    Physical Address Extension (PAE) — многоуровневые таблицы трансляции адресов.
+    \pause\item x86-64: расширения PAE, 48-битная адресная шина (256 Tb)
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Пример: 12 циклов работы на шине памяти DDR3}
-ACTIVATE = 2 такта, \hfill READ = 1 такт, \hfill PRECHARGE = 2 такта.
-\screenshotw{12cm}{pipelined-memory.png}
-\end{frame}
-
-\subsection{USB}
-\begin{frame}
-\frametitle{Обзор}
-Разработка: 1993–1998 г.\\
-Compaq, DEC, IBM, Intel, Microsoft, NEC, и Northern Telecom
-\begin{columns}
-    \column{5cm}
-\onslide<2->{\begin{block}{Задачи USB}
-\begin{enumerate}
-    \item «Нет» джамперам.
-    \item «Нет» развинчиванию корпуса.
-    \item Единый вид кабеля.
-    \item Питание из кабеля.
-    \item Поддержка устройств реального времени.
-    \item «Горячая» установка.
-    \item Дешевизна.
-\end{enumerate}
-\end{block}}
-
-    \column{5cm}
-    \screenshotw{5cm}{usb-logo.pdf}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Развитие шины USB}
-
-\begin{columns}
-    \column{5cm}
-
-    \begin{block}{Версии шины}
-    \begin{itemize}
-        \item USB 1.0: 1.5 Mbps, 1996;
-        \item USB 1.1: 12 Mbps, 1998;
-        \item USB 2.0: 480 Mbps, 2000;
-        \item USB 3.0: 5 Gbps, 2008.
-    \end{itemize}
-    \end{block}
-
-    \column{6cm}
-    \pause
-    \begin{block}{Преимущества USB 3.0}
-    \begin{itemize}
-        \item Скорость,
-        \item сила тока (900 вместо 500 мА),
-        \item полный дуплекс,
-        \item обратная совместмость.
-    \end{itemize}
-    \end{block}
-\end{columns}
-
-\pause
-
-\begin{block}{Основные характеристики}
-\begin{itemize}
-    \item 4 канала: питание (5В), земля, данные (D+, D-);
-    \item топология звезды (корневой хаб);
-    \item сетевая архитектура (пакеты).
+\frametitle{Другие нововведения x86-64}
+\begin{itemize}\itemsep=.6cm
+    \item Два режима работы: Long / Legacy (зависит от ОС);
+    \item адресация относительно PC;
+    \item бит NX для отдельных страниц виртуальной памяти;
+    \item SSE2-инструкции для плавающей точки по умолчанию.
 \end{itemize}
-\end{block}
 \end{frame}
 
-\begin{frame}{Транзакции на шине USB}
-\begin{columns}
-    \pause
-    \column{4.8cm}
-    \begin{block}{Виды}
-    \begin{itemize}
-        \item Управляющие (control),
-        \item прерывания (interrupt),
-        \item пакетные (bulk),
-        \item изохронные (isochronous).
-    \end{itemize}
-    \end{block}
+\section{Стековые машины и IJVM}
+
+\begin{frame}{Стековые машины}
 
     \pause
-    \column{6.7cm}
-    \centering
-    Пример транзакций прерывания
+    %\begin{block}{%
+    Стек кадров подпрограмм:
+    %}
+    \screenshotw{11cm}{stacks.png}
+    %\end{block}
+    \pause
 
-    \screenshotw{6.7cm}{usb-interrupt.png}
+    %\begin{block}{
+    Стек операндов, пример: a1 = a2 + a3:
+    %}
+    \pause\screenshotw{11cm}{operand-stack.png}
+    %\end{block}
 
-    \screenshotw{3cm}{usb-transkey.png}
-\end{columns}
+    \pause
+    \vspace{-.2cm}{\small Стековые машины vs. регистровые машины.}
 \end{frame}
 
-\begin{frame}{Примеры пакетов}%[fragile]
+\begin{frame}{Модель памяти IJVM}
+    \screenshotw{11cm}{ijvm-memory-model.png}
+\end{frame}
 
-\begin{minipage}{7cm}
-\begin{block}{Пакет IN: логическая структура}
-\begin{table}[h]
-\begin{tabular}{@{}cccccc@{}}
-\toprule
-Sync & PID & ADDR & ENDP & CRC5 & EOP\\\bottomrule
-\end{tabular}
-\end{table}
-\end{block}
-\end{minipage}
+\begin{frame}{Набор инструкций IJVM}
+\screenshotw{8.5cm}{ijvm-isa.pdf}
+\end{frame}
 
-\vspace{.4cm}
-\pause
-\screenshotw{12cm}{USB_signal_example.pdf}
+%\begin{frame}{INVOKEVIRTIAL}
+%\screenshotw{10.5cm}{ijvm-invokev.pdf}
+%\end{frame}
+
+\begin{frame}{Компиляция в IJVM}
+\screenshotw{11cm}{ijvm-compile.png}
+\end{frame}
+
+\section{Инструменты работы на уровне ISA}
+
+\begin{frame}{Флаги компилятора, \m{binutils}}
+
+\begin{itemize}\itemsep=1cm
+  \item \m{gcc -S}
+
+  \item \m{objdump}
+\end{itemize}
+
 \end{frame}
 
 \end{document}
