@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Creator: CorelDRAW X6 -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="1831px"
+   height="1063px"
+   version="1.1"
+   style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+   viewBox="0 0 18310 10632"
+   id="svg2"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="alu.svg"><metadata
+     id="metadata56"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1317"
+     inkscape:window-height="744"
+     id="namedview54"
+     showgrid="false"
+     inkscape:zoom="0.48504976"
+     inkscape:cx="950.48547"
+     inkscape:cy="436.41627"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Слой_x0020_1" /><defs
+     id="defs4"><style
+       type="text/css"
+       id="style6"><![CDATA[
+    .str0 {stroke:black;stroke-width:9.00143}
+    .fil0 {fill:black}
+    .fil1 {fill:aqua}
+    .fnt1 {font-weight:normal;font-size:750.119px;font-family:'Arial'}
+    .fnt0 {font-weight:normal;font-size:1000.16px;font-family:'Arial'}
+   ]]></style></defs><g
+     id="Слой_x0020_1"><metadata
+       id="CorelCorpID_0Corel-Layer" /><path
+       class="fil0 str0"
+       d="M15838 5236c-51,13 -49,74 -63,124l26 99 -969 0 1265 -1883c69,-100 103,-143 -49,-142l-1594 1c-409,0 -1368,18 -1710,-3l250 -765 -225 0 -2 -922 -68 2 -3 921 -229 1 252 766 -2811 2c-163,182 -524,631 -691,754 -167,-178 -345,-366 -506,-549 -203,-232 -169,-208 -316,-207l-2615 -1 250 -767 -225 0 -3 -921 -69 -10 -2 931 -225 0 250 765c-415,25 -2926,-35 -3053,18 -9,77 757,1171 841,1297 -149,-39 -611,-225 -721,-228l0 221 -1047 3 -2 72 1049 -4 0 226 756 -246c353,480 686,1015 1016,1517l-757 -248 -3 230 -1588 2 0 65 1586 5 4 229 783 -261 657 978 3967 4 0 891 -225 0 258 792 269 -790 -231 -2 0 -891 4262 0c106,-158 1153,-1746 1216,-1782l1007 0 0 228 792 -264 -755 -259z"
+       id="path10" /><path
+       class="fil1 str0"
+       d="M9231 4281c-103,-53 -658,-774 -784,-774l-5643 4c338,518 1980,2951 2512,3733l8222 1 632 -934c423,-622 839,-1250 1262,-1872 201,-297 466,-643 625,-960 -1949,-19 -3976,23 -5938,23 -261,0 -136,-43 -296,119l-591 659z"
+       id="path12" /><text
+       x="12414"
+       y="4549"
+       class="fil0 fnt0"
+       id="text16">B</text>
+<text
+       x="5436"
+       y="4549"
+       class="fil0 fnt0"
+       id="text18">A</text>
+<text
+       x="369"
+       y="6093"
+       class="fil0 fnt1"
+       id="text20">Команда</text>
+<text
+       x="399"
+       y="4571"
+       class="fil0 fnt1"
+       id="text22">Флаги</text>
+<text
+       x="3772"
+       y="742"
+       class="fil0 fnt1"
+       id="text24">Операнд</text>
+<text
+       x="6865"
+       y="742"
+       class="fil0 fnt1"
+       id="text26">  A</text>
+<text
+       x="4356"
+       y="1580"
+       class="fil0 fnt1"
+       id="text28">(</text>
+<text
+       x="6699"
+       y="1580"
+       class="fil0 fnt1"
+       id="text30"
+       style="font-weight:normal;font-size:750.11901855px;font-family:Arial;fill:#000000">)</text>
+<text
+       x="4605"
+       y="1580"
+       class="fil0 fnt1"
+       id="text32">целое</text>
+<text
+       x="10733"
+       y="742"
+       class="fil0 fnt1"
+       id="text34">Операнд</text>
+<text
+       x="13826"
+       y="742"
+       class="fil0 fnt1"
+       id="text36">  B</text>
+<text
+       x="11337"
+       y="1580"
+       class="fil0 fnt1"
+       id="text38">(</text>
+<text
+       x="13681"
+       y="1580"
+       class="fil0 fnt1"
+       id="text40"
+       style="font-weight:normal;font-size:750.11901855px;font-family:Arial;fill:#000000">)</text>
+<text
+       x="11587"
+       y="1580"
+       class="fil0 fnt1"
+       id="text42">целое</text>
+<text
+       x="7703"
+       y="9534"
+       class="fil0 fnt1"
+       id="text44">Результат</text>
+<text
+       x="8007"
+       y="10372"
+       class="fil0 fnt1"
+       id="text46">(</text>
+<text
+       x="10351"
+       y="10372"
+       class="fil0 fnt1"
+       id="text48"
+       style="font-weight:normal;font-size:750.11901855px;font-family:Arial;fill:#000000">)</text>
+<text
+       x="8257"
+       y="10372"
+       class="fil0 fnt1"
+       id="text50">целое</text>
+<text
+       x="15745"
+       y="5091"
+       class="fil0 fnt1"
+       id="text52">Флаги</text>
+<flowRoot
+       xml:space="preserve"
+       id="flowRoot3384"
+       style="font-style:normal;font-weight:normal;font-size:194.11149597px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="translate(580.10905,460.08649)"><flowRegion
+         id="flowRegion3386"><rect
+           id="rect3388"
+           width="2020.7913"
+           height="1464.0427"
+           x="8328.8867"
+           y="5558.7847" /></flowRegion><flowPara
+         id="flowPara3390"
+         style="font-size:1000.18817139px">C</flowPara></flowRoot></g></svg>

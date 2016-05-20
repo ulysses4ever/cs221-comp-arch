@@ -22,17 +22,45 @@ handout,%
 
 %\section{Разработка уровня микроархитектуры}
 
+\begin{frame}[plain,fragile]{Напоминание: Mic-1}
+    \ttfamily\small
+
+
+\begin{columns}
+        \column{4cm}
+\vspace{-.5cm}
+\screenshotw{4cm}{datapath-light.pdf}
+
+        \column{7.5cm}
+\pause
+«Основной цикл»:\\
+{\footnotesize \m{Main1: PC = PC + 1; fetch; goto (MBR)}}
+    \pause
+    \begin{block}{\texttt{ILOAD k}}
+    \pause
+    \begin{enumerate}[<+->]
+        \item H = LV
+        \item MAR = MBRU + H; rd
+        \item MAR = SP = SP + 1
+        \item PC = PC + 1; fetch; wr
+        \item TOS = MDR; goto Main1
+    \end{enumerate}
+    \end{block}
+
+\end{columns}
+\end{frame}
+
 \begin{frame}{Ускорение работы Mic-1}
 \begin{columns}
     \column{6cm}
+\begin{block}{Основные параметры}
 \pause
-\begin{block}{Идеи ускорения}
-\begin{itemize}[<+->]
-    \item Сокращение числа циклов на\\
-        одну инструкцию,
-    \item сокращение длины цикла,
-    \item параллельное исполнение.
-\end{itemize}
+\begin{enumerate}[<+->]
+    \item Число циклов на
+        одну инструкцию.
+    \item Длина цикла.
+    \item Параллельность исполнения.
+\end{enumerate}
 \end{block}
 %:
 
@@ -59,11 +87,11 @@ handout,%
 \end{block}
 \end{frame}
 
-\begin{frame}[plain]
-\frametitle{Реализация некоторых идей ускорения: Mic-3}
-\vspace{-.2cm}
-\screenshotw{7.2cm}{mic-3.png}
-\end{frame}
+%\begin{frame}[plain]
+%\frametitle{Реализация некоторых идей ускорения: Mic-3}
+%\vspace{-.2cm}
+%\screenshotw{7.2cm}{mic-3.png}
+%\end{frame}
 
 \section{Сокращение длины пути исполнения}
 
@@ -79,7 +107,7 @@ handout,%
 \pause
 \begin{columns}
     \column{5.5cm}
-    \begin{block}{Реализация \texttt{POP} «в лоб»}
+    \begin{block}{Прямолинейная реализация \texttt{POP}}
     \pause
     \begin{enumerate}
         \item \texttt{MAR = SP = SP - 1; rd}
@@ -138,11 +166,11 @@ handout,%
 \screenshotw{12cm}{IFU-FSM.pdf}
 \end{frame}
 
-\begin{frame}{Сравнение реализации \texttt{ILOAD}}
+\begin{frame}{Сравнение реализации \texttt{ILOAD k}}
 \small
 \begin{columns}
     \column{5.5cm}
-    \begin{block}{Старая реализация \texttt{ILOAD}}
+    \begin{block}{Старая реализация \texttt{ILOAD k}}
     \begin{enumerate}
         \item \texttt{MAR = MBRU + LV; rd}
         \item \texttt{MAR = SP = SP + 1}
@@ -153,7 +181,7 @@ handout,%
 
     \pause
     \column{6cm}
-    \begin{block}{Новая реализация \texttt{ILOAD}}
+    \begin{block}{Новая реализация \texttt{ILOAD k}}
     \begin{enumerate}
         \item \texttt{MAR = LV + MBR1U; rd}
         \item \texttt{MAR = SP = SP + 1}
@@ -166,10 +194,10 @@ handout,%
 Вывод: путь сократился на 2 цикла.
 \end{frame}
 
-\begin{frame}{Сравнение реализации \texttt{IINC}}
+\begin{frame}{Сравнение реализации \texttt{IINC k n}}
 \begin{columns}
-    \column{5.5cm}
-    \begin{block}{Старая реализация \texttt{IINC}}
+    \column{5.7cm}
+    \begin{block}{Старая реализация \texttt{IINC k n}}
     \pause
     \begin{enumerate}
         \item \texttt{H = LV}
@@ -182,8 +210,8 @@ handout,%
     \end{block}
 
     \pause
-    \column{6cm}
-    \begin{block}{Новая реализация \texttt{IINC}}
+    \column{5.7cm}
+    \begin{block}{Новая реализация \texttt{IINC k n}}
     \begin{enumerate}
         \item \texttt{MAR = LV + MBR1U; rd}
         \item \texttt{H = MBR1}
@@ -196,11 +224,13 @@ handout,%
 \section{Конвейер}
 
 \begin{frame}[plain]{Микроархитектура Mic-3}
-\screenshotw{7.2cm}{Mic-3.pdf}
+\vspace{-.2cm}
+\screenshotw{7.5cm}{Mic-3.pdf}
 \end{frame}
 
 \begin{frame}[plain]{Принцип работы конвейера Mic-3}
-\screenshotw{8cm}{Mic-3-pipeline.pdf}
+\vspace{-.2cm}
+\screenshotw{8.3cm}{Mic-3-pipeline.pdf}
 \end{frame}
 
 \begin{frame}{Пример: инструкция \texttt{SWAP}}
@@ -225,4 +255,15 @@ handout,%
 \begin{frame}{Конвейерная реализация \texttt{SWAP}}
 \screenshotw{12cm}{Swap-pipelined.pdf}
 \end{frame}
+
+\section{Немного о практике}
+
+\begin{frame}{Задача и схема работы}
+\screenshotw{11.5cm}{mic-1-lab.pdf}
+\end{frame}
+
+\begin{frame}{Симулятор Mic-1}
+\screenshotw{9cm}{mic-1-lab-sim.png}
+\end{frame}
+
 \end{document}
