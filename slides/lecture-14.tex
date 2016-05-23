@@ -13,7 +13,8 @@ handout,%
 \newcommand{\p}{\textbf{\textcolor{green}{+}}}
 \newcommand{\myminus}{\textbf{\textcolor{red}{–}}}
 
-\title[Цифровая логика: схемы памяти]{Архитектура компьютеров\texorpdfstring{\\}{ }Лекция 9. Цифровой логический уровень:\texorpdfstring{\\}{ }тактовые генераторы, схемы памяти}
+\title[Цифровая логика: схемы памяти]{Архитектура компьютеров\texorpdfstring{\\}{ }
+Лекция 14. Уровень цифровой логики:\texorpdfstring{\\}{ }схемы и шины памяти}
 
 \begin{document}
 
@@ -21,15 +22,13 @@ handout,%
 \titlepage
 \end{frame}
 
-\section{Тактовые генераторы (clocks)}
+%\section{Тактовые генераторы (clocks)}
 \begin{frame}
-\frametitle{Модификации тактовых генераторов}
+\frametitle{Тактовые генераторы (clocks)}
 \screenshotw{10cm}{clocks.png}
 \end{frame}
 
-\section {Схемы памяти}
-
-\subsection{Малые последовательностные схемы}
+\section{Малые последовательностные схемы}
 
 \begin{frame}
 \frametitle{SR-защёлка (latch)}
@@ -37,14 +36,19 @@ handout,%
 \end{frame}
 
 \begin{frame}
-\frametitle{Два устойчивых состояния SR-защёлки (latch)}
+\frametitle{Два устойчивых состояния SR-защёлки}
+
+\vspace{-.2cm}
 \screenshotw{12cm}{SR-latch-stable-states.png}
 
+\pause
+\centering
+\vspace{-.1cm}
 \begin{minipage}{8cm}
 \begin{framed}
 \vspace{-.2cm}
-        \parbox{4cm}{Конечный автомат для\\
-            устойчивых состояний\\SR-защёлки}
+        \parbox{4cm}{Конечный автомат\\
+            для SR-защёлки}
         \parbox{3cm}{\input{misc/sr-automata.tex}}
 \vspace{-.2cm}
 \end{framed}
@@ -74,7 +78,7 @@ handout,%
 \end{columns}
 \end{frame}
 
-\subsection{Средние последовательностные схемы}
+\section{Средние последовательностные схемы}
 
 \begin{frame}
 \frametitle{Схема 4-битного регистра}
@@ -86,7 +90,7 @@ handout,%
 \screenshotw{7.1cm}{4x3-memory-chip.pdf}
 \end{frame}
 
-\subsection{VLSI-последовательностные схемы}
+\section{VLSI-последовательностные схемы}
 
 \begin{frame}
 \frametitle{4 Mbit-схемы памяти}
@@ -98,11 +102,11 @@ handout,%
 \screenshotw{11cm}{large-memory-chips-2.png}
 \end{frame}
 
-\subsection{Разнообразие технологий памяти}
+\section{Разнообразие технологий памяти}
 
 \begin{frame}
 \frametitle{Типы микросхем ОЗУ}
-\begin{itemize}[<+->]
+\begin{itemize}[<+->]\itemsep=.5cm
     \item Статическая и динамическая память (SRAM vs. DRAM).
     \item Синхронная динамическая память (SDRAM).
     \item Double Data Rate (DDR) SDRAM.
@@ -131,5 +135,42 @@ handout,%
 \end{tabu}
 \end{table}
 \end{frame}
+
+\section{Память DDR}
+\begin{frame}{Организация модуля памяти DDR, терминология}
+\pause
+\begin{itemize}%\itemsep=.3cm
+    \item Модуль — печатная плата с $N$ чипами.
+
+    \pause\item Матричный доступ внутри одного чипа: {\color{red} \m{row} x \m{col}}.
+
+    \pause\item Третье измерение внутри одного чипа:\\ «{\color{red}банк}»  — помнит «открытую» (выбранную) строку.
+
+    \pause\item «Ранг» (rank) — группа чипов на планке, которые предоставляют доступ к 64-разрядному значению.
+
+
+    \pause\item Пример: габариты 1-Гб планки
+    \begin{itemize}
+        \item чип: 64M×4,
+        \item всего 32 чипа,
+        \item два ранга.
+    \end{itemize}
+
+
+    \pause\item Основные команды для $k$-го банка памяти:
+    \begin{itemize}
+        \item ACTIVATE — «открывает» $i$-ую строку;
+        \item READ / WRITE — читает / пишет в $j$-й столбец;
+        \item PRECHARGE — «закрывает» текущую открытую строку.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Пример: 12 циклов работы на шине памяти DDR3}
+ACTIVATE = 2 такта, \hfill READ = 1 такт, \hfill PRECHARGE = 2 такта.
+\screenshotw{12cm}{pipelined-memory.png}
+\end{frame}
+
 
 \end{document}
