@@ -1,6 +1,15 @@
+## cs211-comp-arch
+
 This repo contains sources for [**CS221. Computer Architecture**](http://edu.mmcs.sfedu.ru/course/view.php?id=170) course given 
 at the [Institute of Mathematics, Mechanics and Computer Science](http://mmcs.sfedu.ru/), 
 [Southern Federal University](http://sfedu.ru/) ([Computer Science and IT major](http://it.mmcs.sfedu.ru/)).
+
+
+### Lectures
+
+Just `cd` into `slides` and then `pdflatex lecture-XX.tex` to build a `lecture-XX.pdf` (XX is from 01 onwwards).
+
+### Labs
 
 We use:
 
