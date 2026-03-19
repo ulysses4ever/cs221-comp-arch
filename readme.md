@@ -1,8 +1,9 @@
-## cs211-comp-arch
+## CS211 Computer Architecture (Artem Pelenitsyn)
 
-This repo contains sources for [**CS221. Computer Architecture**](http://edu.mmcs.sfedu.ru/course/view.php?id=170) course given 
-at the [Institute of Mathematics, Mechanics and Computer Science](http://mmcs.sfedu.ru/), 
-[Southern Federal University](http://sfedu.ru/) ([Computer Science and IT major](http://it.mmcs.sfedu.ru/)).
+This repo contains sources for **CS221 Computer Architecture**,
+a course that was running (in this form) through 2012-2016 at the [Institute of Mathematics, Mechanics and Computer Science](http://mmcs.sfedu.ru/), 
+([Southern Federal University](http://sfedu.ru/), [Computer Science and SE major](http://it.mmcs.sfedu.ru/)).
+The old course page is [available in Web Archive](https://web.archive.org/web/20160616230157/http://edu.mmcs.sfedu.ru/course/view.php?id=170).
 
 
 ### Lectures
