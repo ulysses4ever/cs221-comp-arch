@@ -36,7 +36,7 @@ besides:
   Moodle (we assume, that assignments are pre-created and we only update their
   text) in its first line; cf. [lesson-1.md](https://bitbucket.org/Ulysses4ever/cs221-comp-arch/src/010360eb73394a6755bdb10aa5fa6a1cc8aa86d5/lessons/lesson-01.md?at=master).
   
-The repo contains a bunch of handy scripts, which are documented directly in their source and/or in the [wiki](https://bitbucket.org/Ulysses4ever/it211-programming-languages/wiki). E. g. the most straightforward way to obtain code for non-assignment materials (`pages` directory) is to run `getHeadlessHtml.sh` and manually copy HTML code which is already in your clipboard after that to Moodle (also you need `xlip` installed on your system to use this).
+The repo contains a bunch of handy scripts, which are documented directly in their source. E. g. the most straightforward way to obtain code for non-assignment materials (`pages` directory) is to run `getHeadlessHtml.sh` and manually copy HTML code which is already in your clipboard after that to Moodle (also you need `xlip` installed on your system to use this).
 
 You'll probably like to have offline interactive MD editor. We suggest you to use Geany + corresponding plugin (found e.g. in Ubuntu repo) or LightTable / Sublime + corresponding plugins. They do not understand full pandoc Markdown but trying their best, so cheer up to them!
 
