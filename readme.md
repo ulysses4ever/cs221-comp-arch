@@ -38,3 +38,19 @@ besides:
 The repo contains a bunch of handy scripts, which are documented directly in their source and/or in the [wiki](https://bitbucket.org/Ulysses4ever/it211-programming-languages/wiki). E. g. the most straightforward way to obtain code for non-assignment materials (`pages` directory) is to run `getHeadlessHtml.sh` and manually copy HTML code which is already in your clipboard after that to Moodle (also you need `xlip` installed on your system to use this).
 
 You'll probably like to have offline interactive MD editor. We suggest you to use Geany + corresponding plugin (found e.g. in Ubuntu repo) or LightTable / Sublime + corresponding plugins. They do not understand full pandoc Markdown but trying their best, so cheer up to them!
+
+## License
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+![CC BY-NC-SA Icon](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)
+
+You are free to:
+- **Share**: Copy and redistribute the material in any medium or format.
+- **Adapt**: Remix, transform, and build upon the material.
+
+Under the following terms:
+- **Attribution**: You must give appropriate credit and provide a link to the license.
+- **NonCommercial**: You may not use the material for commercial purposes.
+- **ShareAlike**: If you remix or transform the material, you must distribute your contributions under the same license as the original.
+
